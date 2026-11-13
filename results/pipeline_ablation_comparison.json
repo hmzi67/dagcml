@@ -1,0 +1,135 @@
+{
+  "configs": {
+    "no_curriculum_maml": {
+      "skip_warmup": false,
+      "curriculum_mode": "none",
+      "window_scheduling": "random",
+      "alignment_gating": false
+    },
+    "no_warmup_dacl": {
+      "skip_warmup": true,
+      "curriculum_mode": "dacl_dynamic",
+      "window_scheduling": "competence",
+      "alignment_gating": true
+    },
+    "floor_no_warmup_no_curriculum": {
+      "skip_warmup": true,
+      "curriculum_mode": "none",
+      "window_scheduling": "random",
+      "alignment_gating": false
+    }
+  },
+  "results": {
+    "no_warmup_dacl": {
+      "en": 0.6626746506986028,
+      "fr": 0.6171656686626746,
+      "es": 0.6265469061876248,
+      "de": 0.6375249500998004,
+      "el": 0.6117764471057884,
+      "bg": 0.6425149700598802,
+      "ru": 0.6369261477045908,
+      "tr": 0.6193612774451098,
+      "ar": 0.6091816367265469,
+      "vi": 0.5870259481037924,
+      "th": 0.5746506986027944,
+      "zh": 0.6045908183632734,
+      "hi": 0.6073852295409181,
+      "sw": 0.5808383233532934,
+      "ur": 0.5760479041916168,
+      "average": 0.6129474384564203
+    },
+    "floor_no_warmup_no_curriculum": {
+      "en": 0.7407185628742515,
+      "fr": 0.7269461077844311,
+      "es": 0.7297405189620758,
+      "de": 0.7211576846307385,
+      "el": 0.7327345309381238,
+      "bg": 0.7255489021956087,
+      "ru": 0.7167664670658682,
+      "tr": 0.706187624750499,
+      "ar": 0.6946107784431138,
+      "vi": 0.6994011976047905,
+      "th": 0.6620758483033932,
+      "zh": 0.6868263473053893,
+      "hi": 0.6936127744510978,
+      "sw": 0.6696606786427146,
+      "ur": 0.656686626746507,
+      "average": 0.7041783100465735
+    },
+    "no_curriculum_maml": {
+      "en": 0.8854291417165668,
+      "fr": 0.8389221556886227,
+      "es": 0.8477045908183632,
+      "de": 0.836127744510978,
+      "el": 0.8265469061876247,
+      "bg": 0.8353293413173652,
+      "ru": 0.8213572854291418,
+      "tr": 0.8079840319361278,
+      "ar": 0.7966067864271457,
+      "vi": 0.7894211576846307,
+      "th": 0.7772455089820359,
+      "zh": 0.8045908183632735,
+      "hi": 0.7720558882235529,
+      "sw": 0.7493013972055889,
+      "ur": 0.7349301397205589,
+      "average": 0.8082368596141051
+    }
+  },
+  "compute_cost": {
+    "no_warmup_dacl": {
+      "per_language": {
+        "ru": {
+          "mode": "dacl_dynamic",
+          "wall_clock_seconds": 9.252455711364746,
+          "forward_backward_passes": 312
+        },
+        "el": {
+          "mode": "dacl_dynamic",
+          "wall_clock_seconds": 9.386153936386108,
+          "forward_backward_passes": 312
+        }
+      }
+    },
+    "floor_no_warmup_no_curriculum": {
+      "per_language": {
+        "ru": {
+          "mode": "none",
+          "wall_clock_seconds": 0.0,
+          "forward_backward_passes": 0
+        },
+        "el": {
+          "mode": "none",
+          "wall_clock_seconds": 0.0,
+          "forward_backward_passes": 0
+        }
+      }
+    },
+    "no_curriculum_maml": {
+      "per_language": {
+        "ru": {
+          "mode": "none",
+          "wall_clock_seconds": 0.0,
+          "forward_backward_passes": 0
+        },
+        "el": {
+          "mode": "none",
+          "wall_clock_seconds": 0.0,
+          "forward_backward_passes": 0
+        }
+      }
+    }
+  },
+  "wall_clock_seconds": {
+    "no_warmup_dacl": 5305.396034955978,
+    "floor_no_warmup_no_curriculum": 5139.517538547516,
+    "no_curriculum_maml": 23860.57993197441
+  },
+  "wall_clock_notes": {
+    "no_warmup_dacl": "measured by run_ablation.py run_suite() timing wrapper (authoritative)",
+    "floor_no_warmup_no_curriculum": "measured by run_ablation.py run_suite() timing wrapper (authoritative)",
+    "no_curriculum_maml": "measured by run_ablation.py run_suite() timing wrapper on 2026-07-28; recovered from the pipeline_ablation_comparison.json version that existed before this run overwrote it with no_warmup_dacl / floor_no_warmup_no_curriculum only."
+  },
+  "debug_mode": false,
+  "seed": 42,
+  "merge_note": "no_curriculum_maml was run to completion on 2026-07-28 (results_ablation_no_curriculum_maml); no_warmup_dacl and floor_no_warmup_no_curriculum were run on 2026-07-29 via run_ablation.py and originally overwrote this file with only those two. This file was produced by merging the three pre-existing completed runs, not by retraining any of them."
+}

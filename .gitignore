@@ -1,0 +1,51 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+
+# --- Model weights and training artifacts (large; host on the HF Hub instead) ---
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
+*.pkl
+checkpoints*/*
+!checkpoints/README.md
+wandb/
+runs/
+
+# --- Hugging Face / dataset caches ---
+.cache/
+hf_cache/
+
+# --- Manuscript (kept local while under review) ---
+Zero_shot_Curriculum_meta_learning_with_mdeberta/
+
+# --- LaTeX build files (if a paper/ folder is added later) ---
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.synctex.gz
+*.toc
+
+# --- Editor / OS / tooling ---
+.claude/
+.vscode/
+.idea/
+.DS_Store
+__MACOSX/
+*.swp
+
+# --- Secrets ---
+.env
+.env.*

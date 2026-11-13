@@ -1,0 +1,1226 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+======================================================================
+ABLATION no_warmup_dacl: {'skip_warmup': True, 'curriculum_mode': 'dacl_dynamic', 'window_scheduling': 'competence', 'alignment_gating': True}  (debug_mode=False, seed=42)
+======================================================================
+[disk] 11.00 GB free before config no_warmup_dacl
+======================================================================
+CURRICULUM META-LEARNING FOR ZERO-SHOT CROSS-LINGUAL TRANSFER
+Paper Implementation with All 15 XNLI Languages
+======================================================================
+
+Device: cuda
+Model: microsoft/mdeberta-v3-base
+Languages: en, fr, es, de, el, bg, ru, tr, ar, vi, th, zh, hi, sw, ur
+Auxiliary: ru, el
+Target: fr, es, de, bg, tr, ar, vi, th, zh, hi, sw, ur
+
+======================================================================
+STEP 1: LOADING DATASETS
+======================================================================
+
+======================================================================
+LOADING XNLI DATASETS (15 LANGUAGES)
+======================================================================
+
+[High-Resource Language]
+  ✓ en (train): 392702 examples
+  ✓ en (validation): 2490 examples
+
+[Auxiliary Languages - for meta-training]
+  ✓ ru (validation): 2490 examples
+  ✓ el (validation): 2490 examples
+
+[All Languages - test sets for evaluation]
+  ✓ en (test): 5010 examples
+  ✓ fr (test): 5010 examples
+  ✓ es (test): 5010 examples
+  ✓ de (test): 5010 examples
+  ✓ el (test): 5010 examples
+  ✓ bg (test): 5010 examples
+  ✓ ru (test): 5010 examples
+  ✓ tr (test): 5010 examples
+  ✓ ar (test): 5010 examples
+  ✓ vi (test): 5010 examples
+  ✓ th (test): 5010 examples
+  ✓ zh (test): 5010 examples
+  ✓ hi (test): 5010 examples
+  ✓ sw (test): 5010 examples
+  ✓ ur (test): 5010 examples
+
+✓ Total datasets loaded: 19
+
+======================================================================
+STEP 2: INITIALIZING TRAINER
+======================================================================
+Loading weights:   0%|          | 0/198 [00:00<?, ?it/s]Loading weights:   2%|▏         | 3/198 [00:00<00:10, 19.29it/s]Loading weights: 100%|██████████| 198/198 [00:00<00:00, 1223.56it/s]
+[transformers] [1mDebertaV2ForSequenceClassification LOAD REPORT[0m from: microsoft/mdeberta-v3-base
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+deberta.embeddings.word_embeddings._weight | UNEXPECTED | 
+mask_predictions.classifier.bias           | UNEXPECTED | 
+lm_predictions.lm_head.dense.weight        | UNEXPECTED | 
+mask_predictions.LayerNorm.bias            | UNEXPECTED | 
+mask_predictions.LayerNorm.weight          | UNEXPECTED | 
+lm_predictions.lm_head.bias                | UNEXPECTED | 
+lm_predictions.lm_head.LayerNorm.bias      | UNEXPECTED | 
+lm_predictions.lm_head.dense.bias          | UNEXPECTED | 
+mask_predictions.classifier.weight         | UNEXPECTED | 
+mask_predictions.dense.weight              | UNEXPECTED | 
+mask_predictions.dense.bias                | UNEXPECTED | 
+lm_predictions.lm_head.LayerNorm.weight    | UNEXPECTED | 
+pooler.dense.weight                        | MISSING    | 
+classifier.weight                          | MISSING    | 
+pooler.dense.bias                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+✓ Initialized trainer on device: cuda
+
+======================================================================
+STEP 3: WARMUP FINE-TUNING
+======================================================================
+
+⚠️  skip_warmup=True: pipeline-level ablation -- warmup_finetune() NOT run. Meta-training starts from the pretrained backbone with a randomly-initialized classification head.
+
+[Baseline Evaluation] Before meta-training...
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  en: 0.3333
+  [pred-dist fr] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  fr: 0.3333
+  [pred-dist es] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  es: 0.3333
+  [pred-dist de] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  de: 0.3333
+  [pred-dist el] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  el: 0.3333
+  [pred-dist bg] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  bg: 0.3333
+  [pred-dist ru] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  ru: 0.3333
+  [pred-dist tr] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  tr: 0.3333
+  [pred-dist ar] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  ar: 0.3333
+  [pred-dist vi] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  vi: 0.3333
+  [pred-dist th] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  th: 0.3333
+  [pred-dist zh] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  zh: 0.3333
+  [pred-dist hi] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  hi: 0.3333
+  [pred-dist sw] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  sw: 0.3333
+  [pred-dist ur] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  ur: 0.3333
+
+  Average: 0.3333
+----------------------------------------------------------------------
+✓ Saved: ./results_ablation_no_warmup_dacl/baseline_results.json
+
+======================================================================
+STEP 4: META-LEARNING WITH CURRICULUM
+======================================================================
+
+======================================================================
+PHASE 2: META-LEARNING WITH CURRICULUM
+curriculum_mode=dacl_dynamic | window_scheduling=competence | curriculum_direction=hard_first | alignment_gating=True
+======================================================================
+
+[RU] Generating curriculum (dacl_dynamic)...
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+
+[EL] Generating curriculum (dacl_dynamic)...
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+
+✓ Curriculum saved to ./checkpoints_ablation_no_warmup_dacl/curriculum_data.pkl
+[AlignmentGate] Classifier head parameters: ['model.pooler.dense.weight', 'model.pooler.dense.bias', 'model.classifier.weight', 'model.classifier.bias']
+
+[Meta-Learning] Starting MAML training...
+Meta-Episodes:   0%|          | 0/400 [00:00<?, ?it/s]Meta-Episodes:   0%|          | 1/400 [00:06<45:00,  6.77s/it]Meta-Episodes:   0%|          | 2/400 [00:13<43:25,  6.55s/it]Meta-Episodes:   1%|          | 3/400 [00:19<42:52,  6.48s/it]Meta-Episodes:   1%|          | 4/400 [00:25<42:33,  6.45s/it]Meta-Episodes:   1%|▏         | 5/400 [00:32<42:16,  6.42s/it]Meta-Episodes:   2%|▏         | 6/400 [00:38<41:16,  6.29s/it]Meta-Episodes:   2%|▏         | 7/400 [00:44<40:31,  6.19s/it]Meta-Episodes:   2%|▏         | 8/400 [00:50<40:02,  6.13s/it]Meta-Episodes:   2%|▏         | 9/400 [00:56<40:23,  6.20s/it]Meta-Episodes:   2%|▎         | 10/400 [01:02<40:08,  6.18s/it]Meta-Episodes:   3%|▎         | 11/400 [01:09<41:13,  6.36s/it]Meta-Episodes:   3%|▎         | 12/400 [01:15<41:11,  6.37s/it]Meta-Episodes:   3%|▎         | 13/400 [01:22<41:10,  6.38s/it]Meta-Episodes:   4%|▎         | 14/400 [01:28<41:06,  6.39s/it]Meta-Episodes:   4%|▍         | 15/400 [01:35<41:02,  6.40s/it]Meta-Episodes:   4%|▍         | 16/400 [01:41<40:56,  6.40s/it]Meta-Episodes:   4%|▍         | 17/400 [01:48<40:52,  6.40s/it]Meta-Episodes:   4%|▍         | 18/400 [01:54<40:48,  6.41s/it]Meta-Episodes:   5%|▍         | 19/400 [02:00<40:43,  6.41s/it]Meta-Episodes:   5%|▌         | 20/400 [02:07<40:06,  6.33s/it]Meta-Episodes:   5%|▌         | 21/400 [02:13<40:51,  6.47s/it]Meta-Episodes:   6%|▌         | 22/400 [02:20<40:39,  6.45s/it]Meta-Episodes:   6%|▌         | 23/400 [02:26<39:45,  6.33s/it]Meta-Episodes:   6%|▌         | 24/400 [02:32<39:07,  6.24s/it]Meta-Episodes:   6%|▋         | 25/400 [02:38<38:32,  6.17s/it]Meta-Episodes:   6%|▋         | 26/400 [02:44<38:08,  6.12s/it]Meta-Episodes:   7%|▋         | 27/400 [02:50<38:34,  6.21s/it]Meta-Episodes:   7%|▋         | 28/400 [02:57<38:51,  6.27s/it]Meta-Episodes:   7%|▋         | 29/400 [03:03<38:57,  6.30s/it]Meta-Episodes:   8%|▊         | 30/400 [03:09<38:33,  6.25s/it]Meta-Episodes:   8%|▊         | 31/400 [03:16<39:27,  6.42s/it]Meta-Episodes:   8%|▊         | 32/400 [03:22<39:22,  6.42s/it]Meta-Episodes:   8%|▊         | 33/400 [03:29<39:16,  6.42s/it]Meta-Episodes:   8%|▊         | 34/400 [03:35<39:07,  6.41s/it]Meta-Episodes:   9%|▉         | 35/400 [03:42<39:01,  6.42s/it]Meta-Episodes:   9%|▉         | 36/400 [03:48<38:53,  6.41s/it]Meta-Episodes:   9%|▉         | 37/400 [03:54<38:45,  6.41s/it]Meta-Episodes:  10%|▉         | 38/400 [04:00<37:58,  6.29s/it]Meta-Episodes:  10%|▉         | 39/400 [04:06<37:22,  6.21s/it]Meta-Episodes:  10%|█         | 40/400 [04:13<37:44,  6.29s/it]Meta-Episodes:  10%|█         | 41/400 [04:20<38:36,  6.45s/it]Meta-Episodes:  10%|█         | 42/400 [04:26<38:27,  6.45s/it]Meta-Episodes:  11%|█         | 43/400 [04:33<38:19,  6.44s/it]Meta-Episodes:  11%|█         | 44/400 [04:39<37:34,  6.33s/it]Meta-Episodes:  11%|█▏        | 45/400 [04:45<37:29,  6.34s/it]Meta-Episodes:  12%|█▏        | 46/400 [04:51<37:29,  6.35s/it]Meta-Episodes:  12%|█▏        | 47/400 [04:58<36:52,  6.27s/it]Meta-Episodes:  12%|█▏        | 48/400 [05:04<37:00,  6.31s/it]Meta-Episodes:  12%|█▏        | 49/400 [05:10<36:26,  6.23s/it]Meta-Episodes:  12%|█▎        | 50/400 [09:38<8:15:16, 84.90s/it]Meta-Episodes:  13%|█▎        | 51/400 [10:03<6:27:44, 66.66s/it]Meta-Episodes:  13%|█▎        | 52/400 [10:09<4:41:49, 48.59s/it]Meta-Episodes:  13%|█▎        | 53/400 [10:15<3:27:16, 35.84s/it]Meta-Episodes:  14%|█▎        | 54/400 [10:21<2:34:22, 26.77s/it]Meta-Episodes:  14%|█▍        | 55/400 [10:27<1:58:45, 20.65s/it]Meta-Episodes:  14%|█▍        | 56/400 [10:33<1:33:55, 16.38s/it]Meta-Episodes:  14%|█▍        | 57/400 [10:40<1:15:57, 13.29s/it]Meta-Episodes:  14%|█▍        | 58/400 [10:45<1:02:32, 10.97s/it]Meta-Episodes:  15%|█▍        | 59/400 [10:51<54:34,  9.60s/it]  Meta-Episodes:  15%|█▌        | 60/400 [10:58<49:10,  8.68s/it]Meta-Episodes:  15%|█▌        | 61/400 [11:05<45:21,  8.03s/it]Meta-Episodes:  16%|█▌        | 62/400 [11:10<41:02,  7.29s/it]Meta-Episodes:  16%|█▌        | 63/400 [11:16<38:41,  6.89s/it]Meta-Episodes:  16%|█▌        | 64/400 [11:22<37:38,  6.72s/it]Meta-Episodes:  16%|█▋        | 65/400 [11:29<36:59,  6.63s/it]Meta-Episodes:  16%|█▋        | 66/400 [11:35<35:53,  6.45s/it]Meta-Episodes:  17%|█▋        | 67/400 [11:41<35:11,  6.34s/it]Meta-Episodes:  17%|█▋        | 68/400 [11:47<35:13,  6.37s/it]Meta-Episodes:  17%|█▋        | 69/400 [11:54<35:11,  6.38s/it]Meta-Episodes:  18%|█▊        | 70/400 [12:00<34:38,  6.30s/it]Meta-Episodes:  18%|█▊        | 71/400 [12:07<35:18,  6.44s/it]Meta-Episodes:  18%|█▊        | 72/400 [12:13<34:34,  6.33s/it]Meta-Episodes:  18%|█▊        | 73/400 [12:19<33:56,  6.23s/it]Meta-Episodes:  18%|█▊        | 74/400 [12:25<34:02,  6.27s/it]Meta-Episodes:  19%|█▉        | 75/400 [12:31<33:34,  6.20s/it]Meta-Episodes:  19%|█▉        | 76/400 [12:37<33:07,  6.13s/it]Meta-Episodes:  19%|█▉        | 77/400 [12:43<32:45,  6.09s/it]Meta-Episodes:  20%|█▉        | 78/400 [12:49<33:04,  6.16s/it]Meta-Episodes:  20%|█▉        | 79/400 [12:56<33:20,  6.23s/it]Meta-Episodes:  20%|██        | 80/400 [13:02<33:06,  6.21s/it]Meta-Episodes:  20%|██        | 81/400 [13:09<33:50,  6.37s/it]Meta-Episodes:  20%|██        | 82/400 [13:15<33:49,  6.38s/it]Meta-Episodes:  21%|██        | 83/400 [13:21<33:41,  6.38s/it]Meta-Episodes:  21%|██        | 84/400 [13:27<33:03,  6.28s/it]Meta-Episodes:  21%|██▏       | 85/400 [13:33<32:30,  6.19s/it]Meta-Episodes:  22%|██▏       | 86/400 [13:40<32:43,  6.25s/it]Meta-Episodes:  22%|██▏       | 87/400 [13:46<32:53,  6.31s/it]Meta-Episodes:  22%|██▏       | 88/400 [13:52<32:21,  6.22s/it]Meta-Episodes:  22%|██▏       | 89/400 [13:58<31:52,  6.15s/it]Meta-Episodes:  22%|██▎       | 90/400 [14:04<31:34,  6.11s/it]Meta-Episodes:  23%|██▎       | 91/400 [14:11<32:31,  6.32s/it]Meta-Episodes:  23%|██▎       | 92/400 [14:17<32:28,  6.33s/it]Meta-Episodes:  23%|██▎       | 93/400 [14:24<31:56,  6.24s/it]Meta-Episodes:  24%|██▎       | 94/400 [14:30<31:31,  6.18s/it]Meta-Episodes:  24%|██▍       | 95/400 [14:36<31:13,  6.14s/it]Meta-Episodes:  24%|██▍       | 96/400 [14:42<30:59,  6.12s/it]Meta-Episodes:  24%|██▍       | 97/400 [14:48<30:39,  6.07s/it]Meta-Episodes:  24%|██▍       | 98/400 [14:53<30:08,  5.99s/it]Meta-Episodes:  25%|██▍       | 99/400 [14:59<30:08,  6.01s/it]Meta-Episodes:  25%|██▌       | 100/400 [19:27<7:02:48, 84.56s/it]Meta-Episodes:  25%|██▌       | 101/400 [19:52<5:31:33, 66.53s/it]Meta-Episodes:  26%|██▌       | 102/400 [19:58<4:00:53, 48.50s/it]Meta-Episodes:  26%|██▌       | 103/400 [20:05<2:57:36, 35.88s/it]Meta-Episodes:  26%|██▌       | 104/400 [20:11<2:12:51, 26.93s/it]Meta-Episodes:  26%|██▋       | 105/400 [20:17<1:42:11, 20.78s/it]Meta-Episodes:  26%|██▋       | 106/400 [20:24<1:20:42, 16.47s/it]Meta-Episodes:  27%|██▋       | 107/400 [20:30<1:05:39, 13.45s/it]Meta-Episodes:  27%|██▋       | 108/400 [20:36<55:10, 11.34s/it]  Meta-Episodes:  27%|██▋       | 109/400 [20:43<47:50,  9.86s/it]Meta-Episodes:  28%|██▊       | 110/400 [20:49<42:45,  8.85s/it]Meta-Episodes:  28%|██▊       | 111/400 [20:56<39:11,  8.14s/it]Meta-Episodes:  28%|██▊       | 112/400 [21:02<36:05,  7.52s/it]Meta-Episodes:  28%|██▊       | 113/400 [21:08<33:41,  7.05s/it]Meta-Episodes:  28%|██▊       | 114/400 [21:14<32:35,  6.84s/it]Meta-Episodes:  29%|██▉       | 115/400 [21:20<31:20,  6.60s/it]Meta-Episodes:  29%|██▉       | 116/400 [21:27<30:56,  6.54s/it]Meta-Episodes:  29%|██▉       | 117/400 [21:33<30:35,  6.49s/it]Meta-Episodes:  30%|██▉       | 118/400 [21:39<29:54,  6.36s/it]Meta-Episodes:  30%|██▉       | 119/400 [21:45<29:08,  6.22s/it]Meta-Episodes:  30%|███       | 120/400 [21:51<28:45,  6.16s/it]Meta-Episodes:  30%|███       | 121/400 [21:58<29:32,  6.35s/it]Meta-Episodes:  30%|███       | 122/400 [22:04<29:02,  6.27s/it]Meta-Episodes:  31%|███       | 123/400 [22:10<28:29,  6.17s/it]Meta-Episodes:  31%|███       | 124/400 [22:15<27:29,  5.98s/it]Meta-Episodes:  31%|███▏      | 125/400 [22:21<27:32,  6.01s/it]Meta-Episodes:  32%|███▏      | 126/400 [22:27<27:11,  5.96s/it]Meta-Episodes:  32%|███▏      | 127/400 [22:34<27:43,  6.09s/it]Meta-Episodes:  32%|███▏      | 128/400 [22:40<27:34,  6.08s/it]Meta-Episodes:  32%|███▏      | 129/400 [22:46<27:54,  6.18s/it]Meta-Episodes:  32%|███▎      | 130/400 [22:53<28:13,  6.27s/it]Meta-Episodes:  33%|███▎      | 131/400 [22:59<28:52,  6.44s/it]Meta-Episodes:  33%|███▎      | 132/400 [23:06<28:41,  6.42s/it]Meta-Episodes:  33%|███▎      | 133/400 [23:12<28:31,  6.41s/it]Meta-Episodes:  34%|███▎      | 134/400 [23:18<27:55,  6.30s/it]Meta-Episodes:  34%|███▍      | 135/400 [23:25<27:54,  6.32s/it]Meta-Episodes:  34%|███▍      | 136/400 [23:31<27:28,  6.25s/it]Meta-Episodes:  34%|███▍      | 137/400 [23:37<27:06,  6.18s/it]Meta-Episodes:  34%|███▍      | 138/400 [23:43<27:17,  6.25s/it]Meta-Episodes:  35%|███▍      | 139/400 [23:49<26:56,  6.20s/it]Meta-Episodes:  35%|███▌      | 140/400 [23:56<27:11,  6.27s/it]Meta-Episodes:  35%|███▌      | 141/400 [24:02<27:48,  6.44s/it]Meta-Episodes:  36%|███▌      | 142/400 [24:09<27:40,  6.44s/it]Meta-Episodes:  36%|███▌      | 143/400 [24:15<27:32,  6.43s/it]Meta-Episodes:  36%|███▌      | 144/400 [24:21<26:57,  6.32s/it]Meta-Episodes:  36%|███▋      | 145/400 [24:28<26:55,  6.34s/it]Meta-Episodes:  36%|███▋      | 146/400 [24:34<26:56,  6.36s/it]Meta-Episodes:  37%|███▋      | 147/400 [24:40<26:26,  6.27s/it]Meta-Episodes:  37%|███▋      | 148/400 [24:46<26:21,  6.28s/it]Meta-Episodes:  37%|███▋      | 149/400 [24:52<25:58,  6.21s/it]Meta-Episodes:  38%|███▊      | 150/400 [29:22<5:54:24, 85.06s/it]Meta-Episodes:  38%|███▊      | 151/400 [29:46<4:37:13, 66.80s/it]Meta-Episodes:  38%|███▊      | 152/400 [29:52<3:21:07, 48.66s/it]Meta-Episodes:  38%|███▊      | 153/400 [29:58<2:28:08, 35.99s/it]Meta-Episodes:  38%|███▊      | 154/400 [30:05<1:50:46, 27.02s/it]Meta-Episodes:  39%|███▉      | 155/400 [30:10<1:24:27, 20.68s/it]Meta-Episodes:  39%|███▉      | 156/400 [30:17<1:06:44, 16.41s/it]Meta-Episodes:  39%|███▉      | 157/400 [30:23<53:53, 13.30s/it]  Meta-Episodes:  40%|███▉      | 158/400 [30:29<45:14, 11.22s/it]Meta-Episodes:  40%|███▉      | 159/400 [30:36<39:15,  9.77s/it]Meta-Episodes:  40%|████      | 160/400 [30:42<35:11,  8.80s/it]Meta-Episodes:  40%|████      | 161/400 [30:49<32:42,  8.21s/it]Meta-Episodes:  40%|████      | 162/400 [30:56<30:26,  7.68s/it]Meta-Episodes:  41%|████      | 163/400 [31:02<28:48,  7.29s/it]Meta-Episodes:  41%|████      | 164/400 [31:08<27:36,  7.02s/it]Meta-Episodes:  41%|████▏     | 165/400 [31:15<26:48,  6.85s/it]Meta-Episodes:  42%|████▏     | 166/400 [31:21<26:10,  6.71s/it]Meta-Episodes:  42%|████▏     | 167/400 [31:28<25:44,  6.63s/it]Meta-Episodes:  42%|████▏     | 168/400 [31:34<24:58,  6.46s/it]Meta-Episodes:  42%|████▏     | 169/400 [31:40<24:51,  6.45s/it]Meta-Episodes:  42%|████▎     | 170/400 [31:47<24:49,  6.48s/it]Meta-Episodes:  43%|████▎     | 171/400 [31:53<25:06,  6.58s/it]Meta-Episodes:  43%|████▎     | 172/400 [31:59<24:24,  6.42s/it]Meta-Episodes:  43%|████▎     | 173/400 [32:05<23:48,  6.29s/it]Meta-Episodes:  44%|████▎     | 174/400 [32:12<23:47,  6.32s/it]Meta-Episodes:  44%|████▍     | 175/400 [32:18<23:48,  6.35s/it]Meta-Episodes:  44%|████▍     | 176/400 [32:25<23:46,  6.37s/it]Meta-Episodes:  44%|████▍     | 177/400 [32:31<23:19,  6.27s/it]Meta-Episodes:  44%|████▍     | 178/400 [32:37<23:17,  6.30s/it]Meta-Episodes:  45%|████▍     | 179/400 [32:43<22:56,  6.23s/it]Meta-Episodes:  45%|████▌     | 180/400 [32:50<23:06,  6.30s/it]Meta-Episodes:  45%|████▌     | 181/400 [32:56<23:13,  6.36s/it]Meta-Episodes:  46%|████▌     | 182/400 [33:02<22:46,  6.27s/it]Meta-Episodes:  46%|████▌     | 183/400 [33:08<22:23,  6.19s/it]Meta-Episodes:  46%|████▌     | 184/400 [33:15<22:32,  6.26s/it]Meta-Episodes:  46%|████▋     | 185/400 [33:21<22:14,  6.21s/it]Meta-Episodes:  46%|████▋     | 186/400 [33:27<22:22,  6.27s/it]Meta-Episodes:  47%|████▋     | 187/400 [33:33<22:22,  6.30s/it]Meta-Episodes:  47%|████▋     | 188/400 [33:40<22:22,  6.33s/it]Meta-Episodes:  47%|████▋     | 189/400 [33:46<22:20,  6.35s/it]Meta-Episodes:  48%|████▊     | 190/400 [33:53<22:22,  6.39s/it]Meta-Episodes:  48%|████▊     | 191/400 [33:59<22:22,  6.42s/it]Meta-Episodes:  48%|████▊     | 192/400 [34:06<22:15,  6.42s/it]Meta-Episodes:  48%|████▊     | 193/400 [34:12<22:07,  6.41s/it]Meta-Episodes:  48%|████▊     | 194/400 [34:18<21:38,  6.30s/it]Meta-Episodes:  49%|████▉     | 195/400 [34:24<21:35,  6.32s/it]Meta-Episodes:  49%|████▉     | 196/400 [34:31<21:13,  6.24s/it]Meta-Episodes:  49%|████▉     | 197/400 [34:37<21:16,  6.29s/it]Meta-Episodes:  50%|████▉     | 198/400 [34:43<21:18,  6.33s/it]Meta-Episodes:  50%|████▉     | 199/400 [34:49<20:55,  6.25s/it]Meta-Episodes:  50%|█████     | 200/400 [39:17<4:42:17, 84.69s/it]Meta-Episodes:  50%|█████     | 201/400 [39:41<3:40:22, 66.44s/it]Meta-Episodes:  50%|█████     | 202/400 [39:47<2:39:50, 48.44s/it]Meta-Episodes:  51%|█████     | 203/400 [39:54<1:57:40, 35.84s/it]Meta-Episodes:  51%|█████     | 204/400 [40:00<1:27:53, 26.91s/it]Meta-Episodes:  51%|█████▏    | 205/400 [40:06<1:07:07, 20.65s/it]Meta-Episodes:  52%|█████▏    | 206/400 [40:12<52:55, 16.37s/it]  Meta-Episodes:  52%|█████▏    | 207/400 [40:18<42:42, 13.28s/it]Meta-Episodes:  52%|█████▏    | 208/400 [40:25<35:34, 11.12s/it]Meta-Episodes:  52%|█████▏    | 209/400 [40:31<30:50,  9.69s/it]Meta-Episodes:  52%|█████▎    | 210/400 [40:37<27:38,  8.73s/it]Meta-Episodes:  53%|█████▎    | 211/400 [40:44<25:40,  8.15s/it]Meta-Episodes:  53%|█████▎    | 212/400 [40:50<23:34,  7.52s/it]Meta-Episodes:  53%|█████▎    | 213/400 [40:57<22:26,  7.20s/it]Meta-Episodes:  54%|█████▎    | 214/400 [41:03<21:34,  6.96s/it]Meta-Episodes:  54%|█████▍    | 215/400 [41:09<20:38,  6.69s/it]Meta-Episodes:  54%|█████▍    | 216/400 [41:15<19:47,  6.45s/it]Meta-Episodes:  54%|█████▍    | 217/400 [41:21<19:39,  6.44s/it]Meta-Episodes:  55%|█████▍    | 218/400 [41:28<19:31,  6.43s/it]Meta-Episodes:  55%|█████▍    | 219/400 [41:34<19:21,  6.42s/it]Meta-Episodes:  55%|█████▌    | 220/400 [41:41<19:18,  6.44s/it]Meta-Episodes:  55%|█████▌    | 221/400 [41:48<19:35,  6.57s/it]Meta-Episodes:  56%|█████▌    | 222/400 [41:54<19:01,  6.41s/it]Meta-Episodes:  56%|█████▌    | 223/400 [42:00<18:35,  6.30s/it]Meta-Episodes:  56%|█████▌    | 224/400 [42:06<18:14,  6.22s/it]Meta-Episodes:  56%|█████▋    | 225/400 [42:12<18:19,  6.28s/it]Meta-Episodes:  56%|█████▋    | 226/400 [42:19<18:19,  6.32s/it]Meta-Episodes:  57%|█████▋    | 227/400 [42:25<18:18,  6.35s/it]Meta-Episodes:  57%|█████▋    | 228/400 [42:31<18:15,  6.37s/it]Meta-Episodes:  57%|█████▋    | 229/400 [42:38<18:11,  6.38s/it]Meta-Episodes:  57%|█████▊    | 230/400 [42:44<18:10,  6.42s/it]Meta-Episodes:  58%|█████▊    | 231/400 [42:51<18:07,  6.44s/it]Meta-Episodes:  58%|█████▊    | 232/400 [42:57<18:00,  6.43s/it]Meta-Episodes:  58%|█████▊    | 233/400 [43:03<17:36,  6.33s/it]Meta-Episodes:  58%|█████▊    | 234/400 [43:10<17:34,  6.35s/it]Meta-Episodes:  59%|█████▉    | 235/400 [43:16<17:31,  6.37s/it]Meta-Episodes:  59%|█████▉    | 236/400 [43:22<17:09,  6.28s/it]Meta-Episodes:  59%|█████▉    | 237/400 [43:29<17:10,  6.32s/it]Meta-Episodes:  60%|█████▉    | 238/400 [43:35<16:53,  6.26s/it]Meta-Episodes:  60%|█████▉    | 239/400 [43:40<16:13,  6.05s/it]Meta-Episodes:  60%|██████    | 240/400 [43:46<16:06,  6.04s/it]Meta-Episodes:  60%|██████    | 241/400 [43:53<16:14,  6.13s/it]Meta-Episodes:  60%|██████    | 242/400 [43:59<16:07,  6.13s/it]Meta-Episodes:  61%|██████    | 243/400 [44:05<15:53,  6.08s/it]Meta-Episodes:  61%|██████    | 244/400 [44:11<15:47,  6.07s/it]Meta-Episodes:  61%|██████▏   | 245/400 [44:17<15:55,  6.17s/it]Meta-Episodes:  62%|██████▏   | 246/400 [44:23<15:44,  6.14s/it]Meta-Episodes:  62%|██████▏   | 247/400 [44:29<15:35,  6.12s/it]Meta-Episodes:  62%|██████▏   | 248/400 [44:35<15:26,  6.09s/it]Meta-Episodes:  62%|██████▏   | 249/400 [44:42<15:34,  6.19s/it]
+[Episode 50] Meta-loss (post-adapt query): 0.6278 | pre-adapt query loss: 0.6309
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[0, 4830, 180] | true=[1670, 1670, 1670]
+  en: 0.3405
+  [pred-dist fr] predicted=[0, 4914, 96] | true=[1670, 1670, 1670]
+  fr: 0.3361
+  [pred-dist es] predicted=[0, 4807, 203] | true=[1670, 1670, 1670]
+  es: 0.3403
+  [pred-dist de] predicted=[0, 4791, 219] | true=[1670, 1670, 1670]
+  de: 0.3371
+  [pred-dist el] predicted=[0, 4927, 83] | true=[1670, 1670, 1670]
+  el: 0.3361
+  [pred-dist bg] predicted=[0, 4859, 151] | true=[1670, 1670, 1670]
+  bg: 0.3381
+  [pred-dist ru] predicted=[0, 4879, 131] | true=[1670, 1670, 1670]
+  ru: 0.3367
+  [pred-dist tr] predicted=[0, 4505, 505] | true=[1670, 1670, 1670]
+  tr: 0.3457
+  [pred-dist ar] predicted=[0, 4675, 335] | true=[1670, 1670, 1670]
+  ar: 0.3387
+  [pred-dist vi] predicted=[0, 4949, 61] | true=[1670, 1670, 1670]
+  vi: 0.3359
+  [pred-dist th] predicted=[0, 3312, 1698] | true=[1670, 1670, 1670]
+  th: 0.3577
+  [pred-dist zh] predicted=[0, 3812, 1198] | true=[1670, 1670, 1670]
+  zh: 0.3513
+  [pred-dist hi] predicted=[0, 4699, 311] | true=[1670, 1670, 1670]
+  hi: 0.3423
+  [pred-dist sw] predicted=[0, 4254, 756] | true=[1670, 1670, 1670]
+  sw: 0.3511
+  [pred-dist ur] predicted=[0, 4347, 663] | true=[1670, 1670, 1670]
+  ur: 0.3465
+
+  Average: 0.3423
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.3423 (episode 50) -- saved best_meta_model.pt
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+
+[Episode 100] Meta-loss (post-adapt query): 0.6581 | pre-adapt query loss: 0.9266
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[3940, 862, 208] | true=[1670, 1670, 1670]
+  en: 0.3196
+  [pred-dist fr] predicted=[4304, 459, 247] | true=[1670, 1670, 1670]
+  fr: 0.3265
+  [pred-dist es] predicted=[3916, 722, 372] | true=[1670, 1670, 1670]
+  es: 0.3230
+  [pred-dist de] predicted=[3813, 857, 340] | true=[1670, 1670, 1670]
+  de: 0.3253
+  [pred-dist el] predicted=[4277, 448, 285] | true=[1670, 1670, 1670]
+  el: 0.3317
+  [pred-dist bg] predicted=[4003, 694, 313] | true=[1670, 1670, 1670]
+  bg: 0.3186
+  [pred-dist ru] predicted=[4049, 708, 253] | true=[1670, 1670, 1670]
+  ru: 0.3218
+  [pred-dist tr] predicted=[2938, 1396, 676] | true=[1670, 1670, 1670]
+  tr: 0.3339
+  [pred-dist ar] predicted=[3337, 1128, 545] | true=[1670, 1670, 1670]
+  ar: 0.3329
+  [pred-dist vi] predicted=[4381, 382, 247] | true=[1670, 1670, 1670]
+  vi: 0.3327
+  [pred-dist th] predicted=[1614, 1937, 1459] | true=[1670, 1670, 1670]
+  th: 0.3505
+  [pred-dist zh] predicted=[1707, 2183, 1120] | true=[1670, 1670, 1670]
+  zh: 0.3365
+  [pred-dist hi] predicted=[3071, 1307, 632] | true=[1670, 1670, 1670]
+  hi: 0.3327
+  [pred-dist sw] predicted=[2799, 1223, 988] | true=[1670, 1670, 1670]
+  sw: 0.3335
+  [pred-dist ur] predicted=[2277, 1617, 1116] | true=[1670, 1670, 1670]
+  ur: 0.3381
+
+  Average: 0.3305
+----------------------------------------------------------------------
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+
+[Episode 150] Meta-loss (post-adapt query): 0.7164 | pre-adapt query loss: 0.9988
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[449, 3855, 706] | true=[1670, 1670, 1670]
+  en: 0.3770
+  [pred-dist fr] predicted=[399, 4187, 424] | true=[1670, 1670, 1670]
+  fr: 0.3677
+  [pred-dist es] predicted=[529, 3884, 597] | true=[1670, 1670, 1670]
+  es: 0.3758
+  [pred-dist de] predicted=[506, 3870, 634] | true=[1670, 1670, 1670]
+  de: 0.3729
+  [pred-dist el] predicted=[304, 4374, 332] | true=[1670, 1670, 1670]
+  el: 0.3653
+  [pred-dist bg] predicted=[387, 4111, 512] | true=[1670, 1670, 1670]
+  bg: 0.3754
+  [pred-dist ru] predicted=[370, 4154, 486] | true=[1670, 1670, 1670]
+  ru: 0.3655
+  [pred-dist tr] predicted=[766, 3394, 850] | true=[1670, 1670, 1670]
+  tr: 0.3788
+  [pred-dist ar] predicted=[527, 3755, 728] | true=[1670, 1670, 1670]
+  ar: 0.3725
+  [pred-dist vi] predicted=[291, 4454, 265] | true=[1670, 1670, 1670]
+  vi: 0.3569
+  [pred-dist th] predicted=[1089, 2265, 1656] | true=[1670, 1670, 1670]
+  th: 0.3806
+  [pred-dist zh] predicted=[972, 2403, 1635] | true=[1670, 1670, 1670]
+  zh: 0.3940
+  [pred-dist hi] predicted=[492, 3940, 578] | true=[1670, 1670, 1670]
+  hi: 0.3663
+  [pred-dist sw] predicted=[799, 3247, 964] | true=[1670, 1670, 1670]
+  sw: 0.3774
+  [pred-dist ur] predicted=[759, 3284, 967] | true=[1670, 1670, 1670]
+  ur: 0.3794
+
+  Average: 0.3737
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.3737 (episode 150) -- saved best_meta_model.pt
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+
+[Episode 200] Meta-loss (post-adapt query): 1.0033 | pre-adapt query loss: 1.1666
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[3296, 1499, 215] | true=[1670, 1670, 1670]
+  en: 0.3315
+  [pred-dist fr] predicted=[3656, 1233, 121] | true=[1670, 1670, 1670]
+  fr: 0.3234
+  [pred-dist es] predicted=[3334, 1536, 140] | true=[1670, 1670, 1670]
+  es: 0.3323
+  [pred-dist de] predicted=[3216, 1618, 176] | true=[1670, 1670, 1670]
+  de: 0.3289
+  [pred-dist el] predicted=[3423, 1489, 98] | true=[1670, 1670, 1670]
+  el: 0.3222
+  [pred-dist bg] predicted=[3306, 1584, 120] | true=[1670, 1670, 1670]
+  bg: 0.3337
+  [pred-dist ru] predicted=[3371, 1528, 111] | true=[1670, 1670, 1670]
+  ru: 0.3273
+  [pred-dist tr] predicted=[2554, 2221, 235] | true=[1670, 1670, 1670]
+  tr: 0.3481
+  [pred-dist ar] predicted=[2708, 2077, 225] | true=[1670, 1670, 1670]
+  ar: 0.3343
+  [pred-dist vi] predicted=[3802, 1144, 64] | true=[1670, 1670, 1670]
+  vi: 0.3172
+  [pred-dist th] predicted=[1721, 2748, 541] | true=[1670, 1670, 1670]
+  th: 0.3772
+  [pred-dist zh] predicted=[1543, 2833, 634] | true=[1670, 1670, 1670]
+  zh: 0.3762
+  [pred-dist hi] predicted=[2019, 2811, 180] | true=[1670, 1670, 1670]
+  hi: 0.3479
+  [pred-dist sw] predicted=[2337, 2352, 321] | true=[1670, 1670, 1670]
+  sw: 0.3469
+  [pred-dist ur] predicted=[1639, 3079, 292] | true=[1670, 1670, 1670]
+  ur: 0.3643
+
+  Average: 0.3408
+----------------------------------------------------------------------
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+
+[Episode 250] Meta-loss (post-adapt query): 0.9450 | pre-adapt query loss: 1.0268
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[2152, 2117, 741] | true=[1670, 1670, 1670]
+  en: 0.4174
+  [pred-dist fr] predicted=[2575, 1932, 503] | true=[1670, 1670, 1670]
+  fr: 0.3900
+  [pred-dist es] predicted=[2440, 1969, 601] | true=[1670, 1670, 1670]
+  es: 0.4072
+  [pred-dist de] predicted=[2175, 2209, 626] | true=[1670, 1670, 1670]
+  de: 0.4102
+  [pred-dist el] predicted=[2536, 2058, 416] | true=[1670, 1670, 1670]
+  el: 0.3938
+  [pred-dist bg] predicted=[2254, 2200, 556] | true=[1670, 1670, 1670]
+  bg: 0.4120
+  [pred-dist ru] predicted=[2056, 2448, 506] | true=[1670, 1670, 1670]
+  ru: 0.3916
+  [pred-dist tr] predicted=[2218, 1987, 805] | true=[1670, 1670, 1670]Meta-Episodes:  62%|██████▎   | 250/400 [49:11<3:32:27, 84.99s/it]Meta-Episodes:  63%|██████▎   | 251/400 [49:34<2:45:22, 66.59s/it]Meta-Episodes:  63%|██████▎   | 252/400 [49:40<1:59:23, 48.40s/it]Meta-Episodes:  63%|██████▎   | 253/400 [49:46<1:27:06, 35.55s/it]Meta-Episodes:  64%|██████▎   | 254/400 [49:52<1:05:00, 26.71s/it]Meta-Episodes:  64%|██████▍   | 255/400 [49:58<49:32, 20.50s/it]  Meta-Episodes:  64%|██████▍   | 256/400 [50:04<39:02, 16.27s/it]Meta-Episodes:  64%|██████▍   | 257/400 [50:10<31:28, 13.21s/it]Meta-Episodes:  64%|██████▍   | 258/400 [50:17<26:25, 11.17s/it]Meta-Episodes:  65%|██████▍   | 259/400 [50:23<22:53,  9.74s/it]Meta-Episodes:  65%|██████▌   | 260/400 [50:30<20:27,  8.77s/it]Meta-Episodes:  65%|██████▌   | 261/400 [50:36<18:58,  8.19s/it]Meta-Episodes:  66%|██████▌   | 262/400 [50:43<17:37,  7.66s/it]Meta-Episodes:  66%|██████▌   | 263/400 [50:49<16:23,  7.18s/it]Meta-Episodes:  66%|██████▌   | 264/400 [50:55<15:44,  6.94s/it]Meta-Episodes:  66%|██████▋   | 265/400 [51:01<15:00,  6.67s/it]Meta-Episodes:  66%|██████▋   | 266/400 [51:08<14:45,  6.60s/it]Meta-Episodes:  67%|██████▋   | 267/400 [51:14<14:30,  6.55s/it]Meta-Episodes:  67%|██████▋   | 268/400 [51:21<14:19,  6.51s/it]Meta-Episodes:  67%|██████▋   | 269/400 [51:27<14:10,  6.49s/it]Meta-Episodes:  68%|██████▊   | 270/400 [51:33<13:50,  6.39s/it]Meta-Episodes:  68%|██████▊   | 271/400 [51:40<14:00,  6.52s/it]Meta-Episodes:  68%|██████▊   | 272/400 [51:46<13:36,  6.38s/it]Meta-Episodes:  68%|██████▊   | 273/400 [51:53<13:31,  6.39s/it]Meta-Episodes:  68%|██████▊   | 274/400 [51:59<13:26,  6.40s/it]Meta-Episodes:  69%|██████▉   | 275/400 [52:05<13:21,  6.41s/it]Meta-Episodes:  69%|██████▉   | 276/400 [52:12<13:15,  6.41s/it]Meta-Episodes:  69%|██████▉   | 277/400 [52:18<13:07,  6.41s/it]Meta-Episodes:  70%|██████▉   | 278/400 [52:25<13:00,  6.40s/it]Meta-Episodes:  70%|██████▉   | 279/400 [52:31<12:54,  6.40s/it]Meta-Episodes:  70%|███████   | 280/400 [52:37<12:38,  6.32s/it]Meta-Episodes:  70%|███████   | 281/400 [52:44<12:36,  6.35s/it]Meta-Episodes:  70%|███████   | 282/400 [52:50<12:19,  6.26s/it]Meta-Episodes:  71%|███████   | 283/400 [52:56<12:19,  6.32s/it]Meta-Episodes:  71%|███████   | 284/400 [53:02<12:03,  6.24s/it]Meta-Episodes:  71%|███████▏  | 285/400 [53:08<11:49,  6.17s/it]Meta-Episodes:  72%|███████▏  | 286/400 [53:15<11:51,  6.24s/it]Meta-Episodes:  72%|███████▏  | 287/400 [53:21<11:50,  6.29s/it]Meta-Episodes:  72%|███████▏  | 288/400 [53:27<11:36,  6.22s/it]Meta-Episodes:  72%|███████▏  | 289/400 [53:33<11:36,  6.28s/it]Meta-Episodes:  72%|███████▎  | 290/400 [53:40<11:38,  6.35s/it]Meta-Episodes:  73%|███████▎  | 291/400 [53:46<11:36,  6.39s/it]Meta-Episodes:  73%|███████▎  | 292/400 [53:52<11:18,  6.29s/it]Meta-Episodes:  73%|███████▎  | 293/400 [53:59<11:16,  6.32s/it]Meta-Episodes:  74%|███████▎  | 294/400 [54:05<11:02,  6.25s/it]Meta-Episodes:  74%|███████▍  | 295/400 [54:11<10:48,  6.17s/it]Meta-Episodes:  74%|███████▍  | 296/400 [54:17<10:49,  6.24s/it]Meta-Episodes:  74%|███████▍  | 297/400 [54:24<10:47,  6.29s/it]Meta-Episodes:  74%|███████▍  | 298/400 [54:30<10:46,  6.34s/it]Meta-Episodes:  75%|███████▍  | 299/400 [54:37<10:42,  6.36s/it]Meta-Episodes:  75%|███████▌  | 300/400 [59:06<2:21:53, 85.13s/it]Meta-Episodes:  75%|███████▌  | 301/400 [59:30<1:50:25, 66.93s/it]Meta-Episodes:  76%|███████▌  | 302/400 [59:36<1:19:29, 48.67s/it]Meta-Episodes:  76%|███████▌  | 303/400 [59:42<57:59, 35.87s/it]  Meta-Episodes:  76%|███████▌  | 304/400 [59:48<43:02, 26.90s/it]Meta-Episodes:  76%|███████▋  | 305/400 [59:55<32:52, 20.76s/it]Meta-Episodes:  76%|███████▋  | 306/400 [1:00:01<25:36, 16.35s/it]Meta-Episodes:  77%|███████▋  | 307/400 [1:00:06<20:19, 13.11s/it]Meta-Episodes:  77%|███████▋  | 308/400 [1:00:12<16:50, 10.98s/it]Meta-Episodes:  77%|███████▋  | 309/400 [1:00:18<14:24,  9.50s/it]Meta-Episodes:  78%|███████▊  | 310/400 [1:00:25<12:53,  8.60s/it]Meta-Episodes:  78%|███████▊  | 311/400 [1:00:31<11:48,  7.96s/it]Meta-Episodes:  78%|███████▊  | 312/400 [1:00:37<10:48,  7.37s/it]Meta-Episodes:  78%|███████▊  | 313/400 [1:00:43<10:05,  6.96s/it]Meta-Episodes:  78%|███████▊  | 314/400 [1:00:50<09:44,  6.80s/it]Meta-Episodes:  79%|███████▉  | 315/400 [1:00:56<09:28,  6.69s/it]Meta-Episodes:  79%|███████▉  | 316/400 [1:01:02<09:05,  6.49s/it]Meta-Episodes:  79%|███████▉  | 317/400 [1:01:08<08:57,  6.47s/it]Meta-Episodes:  80%|███████▉  | 318/400 [1:01:15<08:49,  6.46s/it]Meta-Episodes:  80%|███████▉  | 319/400 [1:01:21<08:33,  6.34s/it]Meta-Episodes:  80%|████████  | 320/400 [1:01:27<08:30,  6.38s/it]Meta-Episodes:  80%|████████  | 321/400 [1:01:34<08:35,  6.52s/it]Meta-Episodes:  80%|████████  | 322/400 [1:01:40<08:17,  6.38s/it]Meta-Episodes:  81%|████████  | 323/400 [1:01:46<08:04,  6.29s/it]Meta-Episodes:  81%|████████  | 324/400 [1:01:52<07:52,  6.22s/it]Meta-Episodes:  81%|████████▏ | 325/400 [1:01:58<07:32,  6.04s/it]Meta-Episodes:  82%|████████▏ | 326/400 [1:02:04<07:34,  6.14s/it]Meta-Episodes:  82%|████████▏ | 327/400 [1:02:11<07:35,  6.23s/it]Meta-Episodes:  82%|████████▏ | 328/400 [1:02:17<07:25,  6.19s/it]Meta-Episodes:  82%|████████▏ | 329/400 [1:02:23<07:17,  6.16s/it]Meta-Episodes:  82%|████████▎ | 330/400 [1:02:30<07:17,  6.25s/it]Meta-Episodes:  83%|████████▎ | 331/400 [1:02:36<07:23,  6.43s/it]Meta-Episodes:  83%|████████▎ | 332/400 [1:02:42<07:09,  6.32s/it]Meta-Episodes:  83%|████████▎ | 333/400 [1:02:49<06:58,  6.25s/it]Meta-Episodes:  84%|████████▎ | 334/400 [1:02:54<06:46,  6.16s/it]Meta-Episodes:  84%|████████▍ | 335/400 [1:03:00<06:28,  5.98s/it]Meta-Episodes:  84%|████████▍ | 336/400 [1:03:06<06:20,  5.95s/it]Meta-Episodes:  84%|████████▍ | 337/400 [1:03:12<06:15,  5.96s/it]Meta-Episodes:  84%|████████▍ | 338/400 [1:03:18<06:08,  5.95s/it]Meta-Episodes:  85%|████████▍ | 339/400 [1:03:23<05:56,  5.84s/it]Meta-Episodes:  85%|████████▌ | 340/400 [1:03:29<05:53,  5.89s/it]Meta-Episodes:  85%|████████▌ | 341/400 [1:03:36<05:55,  6.02s/it]Meta-Episodes:  86%|████████▌ | 342/400 [1:03:42<05:47,  5.99s/it]Meta-Episodes:  86%|████████▌ | 343/400 [1:03:48<05:40,  5.97s/it]Meta-Episodes:  86%|████████▌ | 344/400 [1:03:54<05:34,  5.97s/it]Meta-Episodes:  86%|████████▋ | 345/400 [1:03:59<05:27,  5.96s/it]Meta-Episodes:  86%|████████▋ | 346/400 [1:04:05<05:22,  5.96s/it]Meta-Episodes:  87%|████████▋ | 347/400 [1:04:11<05:16,  5.97s/it]Meta-Episodes:  87%|████████▋ | 348/400 [1:04:17<05:04,  5.86s/it]Meta-Episodes:  87%|████████▋ | 349/400 [1:04:23<05:00,  5.89s/it]Meta-Episodes:  88%|████████▊ | 350/400 [1:08:52<1:10:38, 84.78s/it]Meta-Episodes:  88%|████████▊ | 351/400 [1:09:16<54:19, 66.51s/it]  Meta-Episodes:  88%|████████▊ | 352/400 [1:09:22<38:40, 48.35s/it]Meta-Episodes:  88%|████████▊ | 353/400 [1:09:28<27:56, 35.67s/it]Meta-Episodes:  88%|████████▊ | 354/400 [1:09:34<20:32, 26.80s/it]Meta-Episodes:  89%|████████▉ | 355/400 [1:09:40<15:25, 20.56s/it]Meta-Episodes:  89%|████████▉ | 356/400 [1:09:46<11:52, 16.20s/it]Meta-Episodes:  89%|████████▉ | 357/400 [1:09:52<09:26, 13.17s/it]Meta-Episodes:  90%|████████▉ | 358/400 [1:09:58<07:42, 11.01s/it]Meta-Episodes:  90%|████████▉ | 359/400 [1:10:04<06:35,  9.64s/it]Meta-Episodes:  90%|█████████ | 360/400 [1:10:11<05:43,  8.59s/it]Meta-Episodes:  90%|█████████ | 361/400 [1:10:17<05:08,  7.92s/it]Meta-Episodes:  90%|█████████ | 362/400 [1:10:23<04:34,  7.23s/it]Meta-Episodes:  91%|█████████ | 363/400 [1:10:28<04:09,  6.75s/it]Meta-Episodes:  91%|█████████ | 364/400 [1:10:34<03:54,  6.50s/it]Meta-Episodes:  91%|█████████▏| 365/400 [1:10:40<03:37,  6.22s/it]Meta-Episodes:  92%|█████████▏| 366/400 [1:10:46<03:33,  6.28s/it]Meta-Episodes:  92%|█████████▏| 367/400 [1:10:53<03:28,  6.33s/it]Meta-Episodes:  92%|█████████▏| 368/400 [1:10:59<03:23,  6.36s/it]Meta-Episodes:  92%|█████████▏| 369/400 [1:11:05<03:17,  6.38s/it]Meta-Episodes:  92%|█████████▎| 370/400 [1:11:11<03:08,  6.28s/it]Meta-Episodes:  93%|█████████▎| 371/400 [1:11:18<03:06,  6.44s/it]Meta-Episodes:  93%|█████████▎| 372/400 [1:11:24<02:57,  6.34s/it]Meta-Episodes:  93%|█████████▎| 373/400 [1:11:30<02:48,  6.23s/it]Meta-Episodes:  94%|█████████▎| 374/400 [1:11:37<02:42,  6.27s/it]Meta-Episodes:  94%|█████████▍| 375/400 [1:11:43<02:37,  6.31s/it]Meta-Episodes:  94%|█████████▍| 376/400 [1:11:49<02:29,  6.24s/it]Meta-Episodes:  94%|█████████▍| 377/400 [1:11:55<02:22,  6.18s/it]Meta-Episodes:  94%|█████████▍| 378/400 [1:12:02<02:17,  6.24s/it]Meta-Episodes:  95%|█████████▍| 379/400 [1:12:08<02:12,  6.30s/it]Meta-Episodes:  95%|█████████▌| 380/400 [1:12:14<02:05,  6.26s/it]Meta-Episodes:  95%|█████████▌| 381/400 [1:12:21<01:59,  6.28s/it]Meta-Episodes:  96%|█████████▌| 382/400 [1:12:27<01:51,  6.19s/it]Meta-Episodes:  96%|█████████▌| 383/400 [1:12:32<01:44,  6.13s/it]Meta-Episodes:  96%|█████████▌| 384/400 [1:12:39<01:39,  6.20s/it]Meta-Episodes:  96%|█████████▋| 385/400 [1:12:45<01:33,  6.26s/it]Meta-Episodes:  96%|█████████▋| 386/400 [1:12:52<01:28,  6.31s/it]Meta-Episodes:  97%|█████████▋| 387/400 [1:12:58<01:22,  6.35s/it]Meta-Episodes:  97%|█████████▋| 388/400 [1:13:04<01:15,  6.26s/it]Meta-Episodes:  97%|█████████▋| 389/400 [1:13:11<01:09,  6.31s/it]Meta-Episodes:  98%|█████████▊| 390/400 [1:13:17<01:03,  6.37s/it]Meta-Episodes:  98%|█████████▊| 391/400 [1:13:24<00:58,  6.51s/it]Meta-Episodes:  98%|█████████▊| 392/400 [1:13:30<00:51,  6.48s/it]Meta-Episodes:  98%|█████████▊| 393/400 [1:13:36<00:44,  6.36s/it]Meta-Episodes:  98%|█████████▊| 394/400 [1:13:42<00:37,  6.23s/it]Meta-Episodes:  99%|█████████▉| 395/400 [1:13:49<00:31,  6.29s/it]Meta-Episodes:  99%|█████████▉| 396/400 [1:13:55<00:25,  6.34s/it]Meta-Episodes:  99%|█████████▉| 397/400 [1:14:01<00:18,  6.26s/it]Meta-Episodes: 100%|█████████▉| 398/400 [1:14:07<00:12,  6.06s/it]Meta-Episodes: 100%|█████████▉| 399/400 [1:14:12<00:05,  5.91s/it]Meta-Episodes: 100%|██████████| 400/400 [1:18:41<00:00, 84.82s/it]Meta-Episodes: 100%|██████████| 400/400 [1:18:41<00:00, 11.80s/it]
+
+  tr: 0.4152
+  [pred-dist ar] predicted=[2068, 2151, 791] | true=[1670, 1670, 1670]
+  ar: 0.4066
+  [pred-dist vi] predicted=[2586, 2173, 251] | true=[1670, 1670, 1670]
+  vi: 0.3713
+  [pred-dist th] predicted=[2567, 1234, 1209] | true=[1670, 1670, 1670]
+  th: 0.3950
+  [pred-dist zh] predicted=[2407, 1439, 1164] | true=[1670, 1670, 1670]
+  zh: 0.4271
+  [pred-dist hi] predicted=[1900, 2482, 628] | true=[1670, 1670, 1670]
+  hi: 0.4168
+  [pred-dist sw] predicted=[2350, 1818, 842] | true=[1670, 1670, 1670]
+  sw: 0.4124
+  [pred-dist ur] predicted=[2404, 1828, 778] | true=[1670, 1670, 1670]
+  ur: 0.4078
+
+  Average: 0.4050
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.4050 (episode 250) -- saved best_meta_model.pt
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+
+[Episode 300] Meta-loss (post-adapt query): 0.9276 | pre-adapt query loss: 0.9786
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[3279, 706, 1025] | true=[1670, 1670, 1670]
+  en: 0.4978
+  [pred-dist fr] predicted=[3751, 578, 681] | true=[1670, 1670, 1670]
+  fr: 0.4525
+  [pred-dist es] predicted=[3618, 604, 788] | true=[1670, 1670, 1670]
+  es: 0.4651
+  [pred-dist de] predicted=[3329, 769, 912] | true=[1670, 1670, 1670]
+  de: 0.4747
+  [pred-dist el] predicted=[3826, 638, 546] | true=[1670, 1670, 1670]
+  el: 0.4399
+  [pred-dist bg] predicted=[3455, 795, 760] | true=[1670, 1670, 1670]
+  bg: 0.4727
+  [pred-dist ru] predicted=[3105, 977, 928] | true=[1670, 1670, 1670]
+  ru: 0.4816
+  [pred-dist tr] predicted=[3083, 791, 1136] | true=[1670, 1670, 1670]
+  tr: 0.4796
+  [pred-dist ar] predicted=[3332, 738, 940] | true=[1670, 1670, 1670]
+  ar: 0.4615
+  [pred-dist vi] predicted=[3857, 731, 422] | true=[1670, 1670, 1670]
+  vi: 0.4275
+  [pred-dist th] predicted=[3222, 482, 1306] | true=[1670, 1670, 1670]
+  th: 0.4431
+  [pred-dist zh] predicted=[3117, 502, 1391] | true=[1670, 1670, 1670]
+  zh: 0.4673
+  [pred-dist hi] predicted=[3088, 977, 945] | true=[1670, 1670, 1670]
+  hi: 0.4713
+  [pred-dist sw] predicted=[3538, 504, 968] | true=[1670, 1670, 1670]
+  sw: 0.4405
+  [pred-dist ur] predicted=[3196, 759, 1055] | true=[1670, 1670, 1670]
+  ur: 0.4511
+
+  Average: 0.4617
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.4617 (episode 300) -- saved best_meta_model.pt
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+
+[Episode 350] Meta-loss (post-adapt query): 0.8823 | pre-adapt query loss: 0.9690
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[2556, 1236, 1218] | true=[1670, 1670, 1670]
+  en: 0.6068
+  [pred-dist fr] predicted=[3103, 1101, 806] | true=[1670, 1670, 1670]
+  fr: 0.5443
+  [pred-dist es] predicted=[2932, 1107, 971] | true=[1670, 1670, 1670]
+  es: 0.5699
+  [pred-dist de] predicted=[2578, 1367, 1065] | true=[1670, 1670, 1670]
+  de: 0.5812
+  [pred-dist el] predicted=[3357, 998, 655] | true=[1670, 1670, 1670]
+  el: 0.5166
+  [pred-dist bg] predicted=[2711, 1353, 946] | true=[1670, 1670, 1670]
+  bg: 0.5741
+  [pred-dist ru] predicted=[2413, 1593, 1004] | true=[1670, 1670, 1670]
+  ru: 0.5729
+  [pred-dist tr] predicted=[2604, 1278, 1128] | true=[1670, 1670, 1670]
+  tr: 0.5719
+  [pred-dist ar] predicted=[2842, 1222, 946] | true=[1670, 1670, 1670]
+  ar: 0.5467
+  [pred-dist vi] predicted=[3364, 1095, 551] | true=[1670, 1670, 1670]
+  vi: 0.4960
+  [pred-dist th] predicted=[2710, 949, 1351] | true=[1670, 1670, 1670]
+  th: 0.5246
+  [pred-dist zh] predicted=[2730, 858, 1422] | true=[1670, 1670, 1670]
+  zh: 0.5545
+  [pred-dist hi] predicted=[2728, 1530, 752] | true=[1670, 1670, 1670]
+  hi: 0.5395
+  [pred-dist sw] predicted=[3103, 992, 915] | true=[1670, 1670, 1670]
+  sw: 0.5236
+  [pred-dist ur] predicted=[2848, 1331, 831] | true=[1670, 1670, 1670]
+  ur: 0.5160
+
+  Average: 0.5492
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.5492 (episode 350) -- saved best_meta_model.pt
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+[Curriculum] Annealing: 20 buckets, window=5
+[Curriculum] Generated 16 annealed windows
+
+[Episode 400] Meta-loss (post-adapt query): 0.5466 | pre-adapt query loss: 0.6646
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[2462, 1065, 1483] | true=[1670, 1670, 1670]
+  en: 0.6627
+  [pred-dist fr] predicted=[2723, 1215, 1072] | true=[1670, 1670, 1670]
+  fr: 0.6172
+  [pred-dist es] predicted=[2658, 1071, 1281] | true=[1670, 1670, 1670]
+  es: 0.6265
+  [pred-dist de] predicted=[2390, 1245, 1375] | true=[1670, 1670, 1670]
+  de: 0.6375
+  [pred-dist el] predicted=[2790, 1196, 1024] | true=[1670, 1670, 1670]
+  el: 0.6118
+  [pred-dist bg] predicted=[2398, 1337, 1275] | true=[1670, 1670, 1670]
+  bg: 0.6425
+  [pred-dist ru] predicted=[2200, 1424, 1386] | true=[1670, 1670, 1670]
+  ru: 0.6369
+  [pred-dist tr] predicted=[2407, 1138, 1465] | true=[1670, 1670, 1670]
+  tr: 0.6194
+  [pred-dist ar] predicted=[2497, 1263, 1250] | true=[1670, 1670, 1670]
+  ar: 0.6092
+  [pred-dist vi] predicted=[2782, 1281, 947] | true=[1670, 1670, 1670]
+  vi: 0.5870
+  [pred-dist th] predicted=[2455, 872, 1683] | true=[1670, 1670, 1670]
+  th: 0.5747
+  [pred-dist zh] predicted=[2451, 720, 1839] | true=[1670, 1670, 1670]
+  zh: 0.6046
+  [pred-dist hi] predicted=[2336, 1477, 1197] | true=[1670, 1670, 1670]
+  hi: 0.6074
+  [pred-dist sw] predicted=[2743, 929, 1338] | true=[1670, 1670, 1670]
+  sw: 0.5808
+  [pred-dist ur] predicted=[2468, 1218, 1324] | true=[1670, 1670, 1670]
+  ur: 0.5760
+
+  Average: 0.6129
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.6129 (episode 400) -- saved best_meta_model.pt
+
+✓ Meta-learning completed!
+
+[Best checkpoint] Loading best_meta_model.pt (avg zero-shot acc 0.6129) for final evaluation...
+✓ Checkpoint loaded: best_meta_model.pt
+
+======================================================================
+STEP 5: FINAL ZERO-SHOT EVALUATION
+======================================================================
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[2462, 1065, 1483] | true=[1670, 1670, 1670]
+  en: 0.6627
+  [pred-dist fr] predicted=[2723, 1215, 1072] | true=[1670, 1670, 1670]
+  fr: 0.6172
+  [pred-dist es] predicted=[2658, 1071, 1281] | true=[1670, 1670, 1670]
+  es: 0.6265
+  [pred-dist de] predicted=[2390, 1245, 1375] | true=[1670, 1670, 1670]
+  de: 0.6375
+  [pred-dist el] predicted=[2790, 1196, 1024] | true=[1670, 1670, 1670]
+  el: 0.6118
+  [pred-dist bg] predicted=[2398, 1337, 1275] | true=[1670, 1670, 1670]
+  bg: 0.6425
+  [pred-dist ru] predicted=[2200, 1424, 1386] | true=[1670, 1670, 1670]
+  ru: 0.6369
+  [pred-dist tr] predicted=[2407, 1138, 1465] | true=[1670, 1670, 1670]
+  tr: 0.6194
+  [pred-dist ar] predicted=[2497, 1263, 1250] | true=[1670, 1670, 1670]
+  ar: 0.6092
+  [pred-dist vi] predicted=[2782, 1281, 947] | true=[1670, 1670, 1670]
+  vi: 0.5870
+  [pred-dist th] predicted=[2455, 872, 1683] | true=[1670, 1670, 1670]
+  th: 0.5747
+  [pred-dist zh] predicted=[2451, 720, 1839] | true=[1670, 1670, 1670]
+  zh: 0.6046
+  [pred-dist hi] predicted=[2336, 1477, 1197] | true=[1670, 1670, 1670]
+  hi: 0.6074
+  [pred-dist sw] predicted=[2743, 929, 1338] | true=[1670, 1670, 1670]
+  sw: 0.5808
+  [pred-dist ur] predicted=[2468, 1218, 1324] | true=[1670, 1670, 1670]
+  ur: 0.5760
+
+  Average: 0.6129
+----------------------------------------------------------------------
+✓ Saved: ./results_ablation_no_warmup_dacl/final_results.json
+✓ Saved: ./results_ablation_no_warmup_dacl/training_history.json
+
+======================================================================
+STEP 6: GENERATING VISUALIZATIONS
+======================================================================
+✓ Saved: ./plots_ablation_no_warmup_dacl/training_curves.png
+✓ Saved: ./plots_ablation_no_warmup_dacl/language_comparison.png
+✓ Saved: ./results_ablation_no_warmup_dacl/results_table.csv
+
+======================================================================
+RESULTS TABLE
+======================================================================
+Language CML (Ours) mDeBERTa Baseline Improvement
+      en      66.27             33.33      +32.93
+      fr      61.72             33.33      +28.38
+      es      62.65             33.33      +29.32
+      de      63.75             33.33      +30.42
+      el      61.18             33.33      +27.84
+      bg      64.25             33.33      +30.92
+      ru      63.69             33.33      +30.36
+      tr      61.94             33.33      +28.60
+      ar      60.92             33.33      +27.58
+      vi      58.70             33.33      +25.37
+      th      57.47             33.33      +24.13
+      zh      60.46             33.33      +27.13
+      hi      60.74             33.33      +27.41
+      sw      58.08             33.33      +24.75
+      ur      57.60             33.33      +24.27
+ Average      61.29             33.33      +27.96
+======================================================================
+✓ Saved: ./plots_ablation_no_warmup_dacl/difficulty_drift.png
+✓ Saved: ./plots_ablation_no_warmup_dacl/alignment_stats.png
+
+======================================================================
+FINAL SUMMARY
+======================================================================
+
+Baseline (after warmup):
+  Average Accuracy: 33.33%
+
+Final (after meta-learning, best_meta_model.pt):
+  Average Accuracy: 61.29%
+
+Improvement: +27.96%
+
+✓ All results saved to: ./results_ablation_no_warmup_dacl
+✓ All plots saved to: ./plots_ablation_no_warmup_dacl
+✓ All checkpoints saved to: ./checkpoints_ablation_no_warmup_dacl
+
+======================================================================
+EXPERIMENT COMPLETE!
+======================================================================
+
+[timing] Config no_warmup_dacl took 88.4 minutes
+  [cleanup] removed ./checkpoints_ablation_no_warmup_dacl/best_meta_model.pt
+[disk] 10.63 GB free after cleaning up config no_warmup_dacl
+
+======================================================================
+ABLATION floor_no_warmup_no_curriculum: {'skip_warmup': True, 'curriculum_mode': 'none', 'window_scheduling': 'random', 'alignment_gating': False}  (debug_mode=False, seed=42)
+======================================================================
+[disk] 10.63 GB free before config floor_no_warmup_no_curriculum
+======================================================================
+CURRICULUM META-LEARNING FOR ZERO-SHOT CROSS-LINGUAL TRANSFER
+Paper Implementation with All 15 XNLI Languages
+======================================================================
+
+Device: cuda
+Model: microsoft/mdeberta-v3-base
+Languages: en, fr, es, de, el, bg, ru, tr, ar, vi, th, zh, hi, sw, ur
+Auxiliary: ru, el
+Target: fr, es, de, bg, tr, ar, vi, th, zh, hi, sw, ur
+
+======================================================================
+STEP 1: LOADING DATASETS
+======================================================================
+
+======================================================================
+LOADING XNLI DATASETS (15 LANGUAGES)
+======================================================================
+
+[High-Resource Language]
+  ✓ en (train): 392702 examples
+  ✓ en (validation): 2490 examples
+
+[Auxiliary Languages - for meta-training]
+  ✓ ru (validation): 2490 examples
+  ✓ el (validation): 2490 examples
+
+[All Languages - test sets for evaluation]
+  ✓ en (test): 5010 examples
+  ✓ fr (test): 5010 examples
+  ✓ es (test): 5010 examples
+  ✓ de (test): 5010 examples
+  ✓ el (test): 5010 examples
+  ✓ bg (test): 5010 examples
+  ✓ ru (test): 5010 examples
+  ✓ tr (test): 5010 examples
+  ✓ ar (test): 5010 examples
+  ✓ vi (test): 5010 examples
+  ✓ th (test): 5010 examples
+  ✓ zh (test): 5010 examples
+  ✓ hi (test): 5010 examples
+  ✓ sw (test): 5010 examples
+  ✓ ur (test): 5010 examples
+
+✓ Total datasets loaded: 19
+
+======================================================================
+STEP 2: INITIALIZING TRAINER
+======================================================================
+Loading weights:   0%|          | 0/198 [00:00<?, ?it/s]Loading weights: 100%|██████████| 198/198 [00:00<00:00, 6582.48it/s]
+[transformers] [1mDebertaV2ForSequenceClassification LOAD REPORT[0m from: microsoft/mdeberta-v3-base
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+deberta.embeddings.word_embeddings._weight | UNEXPECTED | 
+mask_predictions.classifier.bias           | UNEXPECTED | 
+lm_predictions.lm_head.dense.weight        | UNEXPECTED | 
+mask_predictions.LayerNorm.bias            | UNEXPECTED | 
+mask_predictions.LayerNorm.weight          | UNEXPECTED | 
+lm_predictions.lm_head.bias                | UNEXPECTED | 
+lm_predictions.lm_head.LayerNorm.bias      | UNEXPECTED | 
+lm_predictions.lm_head.dense.bias          | UNEXPECTED | 
+mask_predictions.classifier.weight         | UNEXPECTED | 
+mask_predictions.dense.weight              | UNEXPECTED | 
+mask_predictions.dense.bias                | UNEXPECTED | 
+lm_predictions.lm_head.LayerNorm.weight    | UNEXPECTED | 
+pooler.dense.weight                        | MISSING    | 
+classifier.weight                          | MISSING    | 
+pooler.dense.bias                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+✓ Initialized trainer on device: cuda
+
+======================================================================
+STEP 3: WARMUP FINE-TUNING
+======================================================================
+
+⚠️  skip_warmup=True: pipeline-level ablation -- warmup_finetune() NOT run. Meta-training starts from the pretrained backbone with a randomly-initialized classification head.
+
+[Baseline Evaluation] Before meta-training...
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  en: 0.3333
+  [pred-dist fr] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  fr: 0.3333
+  [pred-dist es] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  es: 0.3333
+  [pred-dist de] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  de: 0.3333
+  [pred-dist el] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  el: 0.3333
+  [pred-dist bg] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  bg: 0.3333
+  [pred-dist ru] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  ru: 0.3333
+  [pred-dist tr] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  tr: 0.3333
+  [pred-dist ar] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  ar: 0.3333
+  [pred-dist vi] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  vi: 0.3333
+  [pred-dist th] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  th: 0.3333
+  [pred-dist zh] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  zh: 0.3333
+  [pred-dist hi] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  hi: 0.3333
+  [pred-dist sw] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  sw: 0.3333
+  [pred-dist ur] predicted=[5010, 0, 0] | true=[1670, 1670, 1670]
+  ⚠️  COLLAPSE DETECTED: model is predicting a single class for every example.
+  ur: 0.3333
+
+  Average: 0.3333
+----------------------------------------------------------------------
+✓ Saved: ./results_ablation_floor_no_warmup_no_curriculum/baseline_results.json
+
+======================================================================
+STEP 4: META-LEARNING WITH CURRICULUM
+======================================================================
+
+======================================================================
+PHASE 2: META-LEARNING WITH CURRICULUM
+curriculum_mode=none | window_scheduling=random | curriculum_direction=hard_first | alignment_gating=False
+======================================================================
+
+[RU] No curriculum (curriculum_mode='none'): uniform random sampling over the full set...
+
+[EL] No curriculum (curriculum_mode='none'): uniform random sampling over the full set...
+
+✓ Curriculum saved to ./checkpoints_ablation_floor_no_warmup_no_curriculum/curriculum_data.pkl
+
+[Meta-Learning] Starting MAML training...
+Meta-Episodes:   0%|          | 0/400 [00:00<?, ?it/s]Meta-Episodes:   0%|          | 1/400 [00:05<36:13,  5.45s/it]Meta-Episodes:   0%|          | 2/400 [00:11<39:30,  5.96s/it]Meta-Episodes:   1%|          | 3/400 [00:18<40:17,  6.09s/it]Meta-Episodes:   1%|          | 4/400 [00:23<39:35,  6.00s/it]Meta-Episodes:   1%|▏         | 5/400 [00:30<40:05,  6.09s/it]Meta-Episodes:   2%|▏         | 6/400 [00:36<40:20,  6.14s/it]Meta-Episodes:   2%|▏         | 7/400 [00:42<40:30,  6.18s/it]Meta-Episodes:   2%|▏         | 8/400 [00:48<40:39,  6.22s/it]Meta-Episodes:   2%|▏         | 9/400 [00:55<40:40,  6.24s/it]Meta-Episodes:   2%|▎         | 10/400 [01:01<40:00,  6.16s/it]Meta-Episodes:   3%|▎         | 11/400 [01:07<40:05,  6.18s/it]Meta-Episodes:   3%|▎         | 12/400 [01:13<39:24,  6.09s/it]Meta-Episodes:   3%|▎         | 13/400 [01:19<38:50,  6.02s/it]Meta-Episodes:   4%|▎         | 14/400 [01:25<39:12,  6.10s/it]Meta-Episodes:   4%|▍         | 15/400 [01:30<37:48,  5.89s/it]Meta-Episodes:   4%|▍         | 16/400 [01:36<37:30,  5.86s/it]Meta-Episodes:   4%|▍         | 17/400 [01:42<38:05,  5.97s/it]Meta-Episodes:   4%|▍         | 18/400 [01:48<37:34,  5.90s/it]Meta-Episodes:   5%|▍         | 19/400 [01:54<38:06,  6.00s/it]Meta-Episodes:   5%|▌         | 20/400 [02:00<37:55,  5.99s/it]Meta-Episodes:   5%|▌         | 21/400 [02:07<38:17,  6.06s/it]Meta-Episodes:   6%|▌         | 22/400 [02:12<37:53,  6.01s/it]Meta-Episodes:   6%|▌         | 23/400 [02:18<37:32,  5.97s/it]Meta-Episodes:   6%|▌         | 24/400 [02:24<37:15,  5.95s/it]Meta-Episodes:   6%|▋         | 25/400 [02:30<37:46,  6.04s/it]Meta-Episodes:   6%|▋         | 26/400 [02:37<38:04,  6.11s/it]Meta-Episodes:   7%|▋         | 27/400 [02:43<38:15,  6.15s/it]Meta-Episodes:   7%|▋         | 28/400 [02:49<38:23,  6.19s/it]Meta-Episodes:   7%|▋         | 29/400 [02:56<38:25,  6.22s/it]Meta-Episodes:   8%|▊         | 30/400 [03:02<38:32,  6.25s/it]Meta-Episodes:   8%|▊         | 31/400 [03:08<38:23,  6.24s/it]Meta-Episodes:   8%|▊         | 32/400 [03:14<38:20,  6.25s/it]Meta-Episodes:   8%|▊         | 33/400 [03:20<37:32,  6.14s/it]Meta-Episodes:   8%|▊         | 34/400 [03:26<36:58,  6.06s/it]Meta-Episodes:   9%|▉         | 35/400 [03:32<37:12,  6.12s/it]Meta-Episodes:   9%|▉         | 36/400 [03:38<36:41,  6.05s/it]Meta-Episodes:   9%|▉         | 37/400 [03:45<37:00,  6.12s/it]Meta-Episodes:  10%|▉         | 38/400 [03:51<37:10,  6.16s/it]Meta-Episodes:  10%|▉         | 39/400 [03:57<37:16,  6.20s/it]Meta-Episodes:  10%|█         | 40/400 [04:03<37:25,  6.24s/it]Meta-Episodes:  10%|█         | 41/400 [04:10<37:19,  6.24s/it]Meta-Episodes:  10%|█         | 42/400 [04:16<37:14,  6.24s/it]Meta-Episodes:  11%|█         | 43/400 [04:22<37:12,  6.25s/it]Meta-Episodes:  11%|█         | 44/400 [04:28<37:08,  6.26s/it]Meta-Episodes:  11%|█▏        | 45/400 [04:35<37:03,  6.26s/it]Meta-Episodes:  12%|█▏        | 46/400 [04:41<36:54,  6.26s/it]Meta-Episodes:  12%|█▏        | 47/400 [04:47<36:08,  6.14s/it]Meta-Episodes:  12%|█▏        | 48/400 [04:53<36:12,  6.17s/it]Meta-Episodes:  12%|█▏        | 49/400 [04:59<36:12,  6.19s/it]Meta-Episodes:  12%|█▎        | 50/400 [09:27<8:14:15, 84.73s/it]Meta-Episodes:  13%|█▎        | 51/400 [09:34<5:55:53, 61.18s/it]Meta-Episodes:  13%|█▎        | 52/400 [09:40<4:19:19, 44.71s/it]Meta-Episodes:  13%|█▎        | 53/400 [09:46<3:11:54, 33.18s/it]Meta-Episodes:  14%|█▎        | 54/400 [09:52<2:24:51, 25.12s/it]Meta-Episodes:  14%|█▍        | 55/400 [09:58<1:51:15, 19.35s/it]Meta-Episodes:  14%|█▍        | 56/400 [10:05<1:28:23, 15.42s/it]Meta-Episodes:  14%|█▍        | 57/400 [10:10<1:11:45, 12.55s/it]Meta-Episodes:  14%|█▍        | 58/400 [10:17<1:00:46, 10.66s/it]Meta-Episodes:  15%|█▍        | 59/400 [10:23<53:07,  9.35s/it]  Meta-Episodes:  15%|█▌        | 60/400 [10:29<47:16,  8.34s/it]Meta-Episodes:  15%|█▌        | 61/400 [10:35<43:33,  7.71s/it]Meta-Episodes:  16%|█▌        | 62/400 [10:41<41:03,  7.29s/it]Meta-Episodes:  16%|█▌        | 63/400 [10:47<38:37,  6.88s/it]Meta-Episodes:  16%|█▌        | 64/400 [10:54<37:24,  6.68s/it]Meta-Episodes:  16%|█▋        | 65/400 [11:00<36:35,  6.55s/it]Meta-Episodes:  16%|█▋        | 66/400 [11:06<35:57,  6.46s/it]Meta-Episodes:  17%|█▋        | 67/400 [11:12<35:23,  6.38s/it]Meta-Episodes:  17%|█▋        | 68/400 [11:19<35:03,  6.33s/it]Meta-Episodes:  17%|█▋        | 69/400 [11:25<34:52,  6.32s/it]Meta-Episodes:  18%|█▊        | 70/400 [11:31<34:13,  6.22s/it]Meta-Episodes:  18%|█▊        | 71/400 [11:37<34:03,  6.21s/it]Meta-Episodes:  18%|█▊        | 72/400 [11:43<34:05,  6.24s/it]Meta-Episodes:  18%|█▊        | 73/400 [11:50<34:01,  6.24s/it]Meta-Episodes:  18%|█▊        | 74/400 [11:55<33:20,  6.14s/it]Meta-Episodes:  19%|█▉        | 75/400 [12:02<33:28,  6.18s/it]Meta-Episodes:  19%|█▉        | 76/400 [12:08<33:30,  6.21s/it]Meta-Episodes:  19%|█▉        | 77/400 [12:14<33:28,  6.22s/it]Meta-Episodes:  20%|█▉        | 78/400 [12:20<33:24,  6.23s/it]Meta-Episodes:  20%|█▉        | 79/400 [12:27<33:21,  6.24s/it]Meta-Episodes:  20%|██        | 80/400 [12:33<33:28,  6.28s/it]Meta-Episodes:  20%|██        | 81/400 [12:39<33:19,  6.27s/it]Meta-Episodes:  20%|██        | 82/400 [12:46<33:16,  6.28s/it]Meta-Episodes:  21%|██        | 83/400 [12:52<33:11,  6.28s/it]Meta-Episodes:  21%|██        | 84/400 [12:58<32:26,  6.16s/it]Meta-Episodes:  21%|██▏       | 85/400 [13:04<31:52,  6.07s/it]Meta-Episodes:  22%|██▏       | 86/400 [13:10<32:04,  6.13s/it]Meta-Episodes:  22%|██▏       | 87/400 [13:16<31:36,  6.06s/it]Meta-Episodes:  22%|██▏       | 88/400 [13:22<31:15,  6.01s/it]Meta-Episodes:  22%|██▏       | 89/400 [13:28<31:35,  6.10s/it]Meta-Episodes:  22%|██▎       | 90/400 [13:34<31:19,  6.06s/it]Meta-Episodes:  23%|██▎       | 91/400 [13:40<31:27,  6.11s/it]Meta-Episodes:  23%|██▎       | 92/400 [13:47<31:39,  6.17s/it]Meta-Episodes:  23%|██▎       | 93/400 [13:52<31:06,  6.08s/it]Meta-Episodes:  24%|██▎       | 94/400 [13:59<31:15,  6.13s/it]Meta-Episodes:  24%|██▍       | 95/400 [14:05<31:20,  6.17s/it]Meta-Episodes:  24%|██▍       | 96/400 [14:11<31:24,  6.20s/it]Meta-Episodes:  24%|██▍       | 97/400 [14:17<31:23,  6.22s/it]Meta-Episodes:  24%|██▍       | 98/400 [14:24<31:20,  6.23s/it]Meta-Episodes:  25%|██▍       | 99/400 [14:30<30:42,  6.12s/it]Meta-Episodes:  25%|██▌       | 100/400 [18:58<7:04:28, 84.89s/it]Meta-Episodes:  25%|██▌       | 101/400 [19:05<5:05:31, 61.31s/it]Meta-Episodes:  26%|██▌       | 102/400 [19:11<3:42:31, 44.80s/it]Meta-Episodes:  26%|██▌       | 103/400 [19:17<2:43:59, 33.13s/it]Meta-Episodes:  26%|██▌       | 104/400 [19:23<2:03:40, 25.07s/it]Meta-Episodes:  26%|██▋       | 105/400 [19:29<1:35:32, 19.43s/it]Meta-Episodes:  26%|██▋       | 106/400 [19:36<1:15:52, 15.48s/it]Meta-Episodes:  27%|██▋       | 107/400 [19:42<1:02:10, 12.73s/it]Meta-Episodes:  27%|██▋       | 108/400 [19:48<52:34, 10.80s/it]  Meta-Episodes:  27%|██▋       | 109/400 [19:54<45:15,  9.33s/it]Meta-Episodes:  28%|██▊       | 110/400 [20:00<40:45,  8.43s/it]Meta-Episodes:  28%|██▊       | 111/400 [20:07<37:31,  7.79s/it]Meta-Episodes:  28%|██▊       | 112/400 [20:13<35:15,  7.35s/it]Meta-Episodes:  28%|██▊       | 113/400 [20:19<33:34,  7.02s/it]Meta-Episodes:  28%|██▊       | 114/400 [20:25<32:20,  6.79s/it]Meta-Episodes:  29%|██▉       | 115/400 [20:32<31:28,  6.63s/it]Meta-Episodes:  29%|██▉       | 116/400 [20:38<30:50,  6.51s/it]Meta-Episodes:  29%|██▉       | 117/400 [20:44<30:23,  6.44s/it]Meta-Episodes:  30%|██▉       | 118/400 [20:51<30:04,  6.40s/it]Meta-Episodes:  30%|██▉       | 119/400 [20:57<29:47,  6.36s/it]Meta-Episodes:  30%|███       | 120/400 [21:03<29:41,  6.36s/it]Meta-Episodes:  30%|███       | 121/400 [21:09<29:24,  6.33s/it]Meta-Episodes:  30%|███       | 122/400 [21:16<29:15,  6.31s/it]Meta-Episodes:  31%|███       | 123/400 [21:22<28:35,  6.19s/it]Meta-Episodes:  31%|███       | 124/400 [21:28<28:35,  6.22s/it]Meta-Episodes:  31%|███▏      | 125/400 [21:34<28:32,  6.23s/it]Meta-Episodes:  32%|███▏      | 126/400 [21:40<27:48,  6.09s/it]Meta-Episodes:  32%|███▏      | 127/400 [21:46<27:25,  6.03s/it]Meta-Episodes:  32%|███▏      | 128/400 [21:52<27:08,  5.99s/it]Meta-Episodes:  32%|███▏      | 129/400 [21:58<27:23,  6.07s/it]Meta-Episodes:  32%|███▎      | 130/400 [22:04<27:40,  6.15s/it]Meta-Episodes:  33%|███▎      | 131/400 [22:11<27:40,  6.17s/it]Meta-Episodes:  33%|███▎      | 132/400 [22:17<27:40,  6.20s/it]Meta-Episodes:  33%|███▎      | 133/400 [22:23<27:40,  6.22s/it]Meta-Episodes:  34%|███▎      | 134/400 [22:29<27:37,  6.23s/it]Meta-Episodes:  34%|███▍      | 135/400 [22:35<27:02,  6.12s/it]Meta-Episodes:  34%|███▍      | 136/400 [22:41<27:05,  6.16s/it]Meta-Episodes:  34%|███▍      | 137/400 [22:48<27:07,  6.19s/it]Meta-Episodes:  34%|███▍      | 138/400 [22:54<27:10,  6.22s/it]Meta-Episodes:  35%|███▍      | 139/400 [23:00<27:11,  6.25s/it]Meta-Episodes:  35%|███▌      | 140/400 [23:06<26:44,  6.17s/it]Meta-Episodes:  35%|███▌      | 141/400 [23:13<26:42,  6.19s/it]Meta-Episodes:  36%|███▌      | 142/400 [23:19<26:41,  6.21s/it]Meta-Episodes:  36%|███▌      | 143/400 [23:25<26:39,  6.22s/it]Meta-Episodes:  36%|███▌      | 144/400 [23:31<26:35,  6.23s/it]Meta-Episodes:  36%|███▋      | 145/400 [23:38<26:31,  6.24s/it]Meta-Episodes:  36%|███▋      | 146/400 [23:44<26:29,  6.26s/it]Meta-Episodes:  37%|███▋      | 147/400 [23:50<26:25,  6.27s/it]Meta-Episodes:  37%|███▋      | 148/400 [23:56<26:21,  6.27s/it]Meta-Episodes:  37%|███▋      | 149/400 [24:02<25:45,  6.16s/it]Meta-Episodes:  38%|███▊      | 150/400 [28:31<5:53:18, 84.79s/it]Meta-Episodes:  38%|███▊      | 151/400 [28:37<4:14:06, 61.23s/it]Meta-Episodes:  38%|███▊      | 152/400 [28:43<3:04:30, 44.64s/it]Meta-Episodes:  38%|███▊      | 153/400 [28:49<2:15:50, 33.00s/it]Meta-Episodes:  38%|███▊      | 154/400 [28:54<1:41:55, 24.86s/it]Meta-Episodes:  39%|███▉      | 155/400 [29:00<1:18:10, 19.14s/it]Meta-Episodes:  39%|███▉      | 156/400 [29:06<1:01:38, 15.16s/it]Meta-Episodes:  39%|███▉      | 157/400 [29:12<50:04, 12.36s/it]  Meta-Episodes:  40%|███▉      | 158/400 [29:18<41:59, 10.41s/it]Meta-Episodes:  40%|███▉      | 159/400 [29:24<36:44,  9.15s/it]Meta-Episodes:  40%|████      | 160/400 [29:30<33:15,  8.31s/it]Meta-Episodes:  40%|████      | 161/400 [29:37<30:38,  7.69s/it]Meta-Episodes:  40%|████      | 162/400 [29:43<28:50,  7.27s/it]Meta-Episodes:  41%|████      | 163/400 [29:49<27:32,  6.97s/it]Meta-Episodes:  41%|████      | 164/400 [29:55<26:36,  6.76s/it]Meta-Episodes:  41%|████▏     | 165/400 [30:02<25:53,  6.61s/it]Meta-Episodes:  42%|████▏     | 166/400 [30:08<25:21,  6.50s/it]Meta-Episodes:  42%|████▏     | 167/400 [30:14<24:30,  6.31s/it]Meta-Episodes:  42%|████▏     | 168/400 [30:20<24:17,  6.28s/it]Meta-Episodes:  42%|████▏     | 169/400 [30:26<24:09,  6.28s/it]Meta-Episodes:  42%|████▎     | 170/400 [30:33<24:08,  6.30s/it]Meta-Episodes:  43%|████▎     | 171/400 [30:39<23:58,  6.28s/it]Meta-Episodes:  43%|████▎     | 172/400 [30:45<23:51,  6.28s/it]Meta-Episodes:  43%|████▎     | 173/400 [30:51<23:18,  6.16s/it]Meta-Episodes:  44%|████▎     | 174/400 [30:57<23:19,  6.19s/it]Meta-Episodes:  44%|████▍     | 175/400 [31:04<23:15,  6.20s/it]Meta-Episodes:  44%|████▍     | 176/400 [31:10<23:13,  6.22s/it]Meta-Episodes:  44%|████▍     | 177/400 [31:16<22:43,  6.11s/it]Meta-Episodes:  44%|████▍     | 178/400 [31:22<22:45,  6.15s/it]Meta-Episodes:  45%|████▍     | 179/400 [31:28<22:45,  6.18s/it]Meta-Episodes:  45%|████▌     | 180/400 [31:35<22:49,  6.23s/it]Meta-Episodes:  45%|████▌     | 181/400 [31:41<22:42,  6.22s/it]Meta-Episodes:  46%|████▌     | 182/400 [31:47<22:38,  6.23s/it]Meta-Episodes:  46%|████▌     | 183/400 [31:53<22:36,  6.25s/it]Meta-Episodes:  46%|████▌     | 184/400 [32:00<22:33,  6.27s/it]Meta-Episodes:  46%|████▋     | 185/400 [32:06<22:22,  6.24s/it]Meta-Episodes:  46%|████▋     | 186/400 [32:12<21:54,  6.14s/it]Meta-Episodes:  47%|████▋     | 187/400 [32:18<21:32,  6.07s/it]Meta-Episodes:  47%|████▋     | 188/400 [32:23<21:12,  6.00s/it]Meta-Episodes:  47%|████▋     | 189/400 [32:30<21:17,  6.06s/it]Meta-Episodes:  48%|████▊     | 190/400 [32:36<21:27,  6.13s/it]Meta-Episodes:  48%|████▊     | 191/400 [32:42<21:01,  6.03s/it]Meta-Episodes:  48%|████▊     | 192/400 [32:48<20:45,  5.99s/it]Meta-Episodes:  48%|████▊     | 193/400 [32:54<20:57,  6.07s/it]Meta-Episodes:  48%|████▊     | 194/400 [33:00<21:00,  6.12s/it]Meta-Episodes:  49%|████▉     | 195/400 [33:06<21:02,  6.16s/it]Meta-Episodes:  49%|████▉     | 196/400 [33:12<20:36,  6.06s/it]Meta-Episodes:  49%|████▉     | 197/400 [33:18<20:39,  6.11s/it]Meta-Episodes:  50%|████▉     | 198/400 [33:24<20:19,  6.04s/it]Meta-Episodes:  50%|████▉     | 199/400 [33:30<20:23,  6.09s/it]Meta-Episodes:  50%|█████     | 200/400 [37:59<4:42:45, 84.83s/it]Meta-Episodes:  50%|█████     | 201/400 [38:05<3:23:10, 61.26s/it]Meta-Episodes:  50%|█████     | 202/400 [38:11<2:27:20, 44.65s/it]Meta-Episodes:  51%|█████     | 203/400 [38:17<1:48:46, 33.13s/it]Meta-Episodes:  51%|█████     | 204/400 [38:24<1:21:53, 25.07s/it]Meta-Episodes:  51%|█████▏    | 205/400 [38:30<1:02:45, 19.31s/it]Meta-Episodes:  52%|█████▏    | 206/400 [38:36<49:47, 15.40s/it]  Meta-Episodes:  52%|█████▏    | 207/400 [38:42<40:43, 12.66s/it]Meta-Episodes:  52%|█████▏    | 208/400 [38:48<34:00, 10.63s/it]Meta-Episodes:  52%|█████▏    | 209/400 [38:54<29:16,  9.20s/it]Meta-Episodes:  52%|█████▎    | 210/400 [39:00<26:02,  8.23s/it]Meta-Episodes:  53%|█████▎    | 211/400 [39:06<24:00,  7.62s/it]Meta-Episodes:  53%|█████▎    | 212/400 [39:12<22:14,  7.10s/it]Meta-Episodes:  53%|█████▎    | 213/400 [39:18<20:58,  6.73s/it]Meta-Episodes:  54%|█████▎    | 214/400 [39:24<20:26,  6.60s/it]Meta-Episodes:  54%|█████▍    | 215/400 [39:30<19:40,  6.38s/it]Meta-Episodes:  54%|█████▍    | 216/400 [39:36<19:26,  6.34s/it]Meta-Episodes:  54%|█████▍    | 217/400 [39:42<19:17,  6.32s/it]Meta-Episodes:  55%|█████▍    | 218/400 [39:49<19:10,  6.32s/it]Meta-Episodes:  55%|█████▍    | 219/400 [39:55<19:00,  6.30s/it]Meta-Episodes:  55%|█████▌    | 220/400 [40:01<18:56,  6.31s/it]Meta-Episodes:  55%|█████▌    | 221/400 [40:08<18:46,  6.29s/it]Meta-Episodes:  56%|█████▌    | 222/400 [40:14<18:39,  6.29s/it]Meta-Episodes:  56%|█████▌    | 223/400 [40:20<18:11,  6.17s/it]Meta-Episodes:  56%|█████▌    | 224/400 [40:26<18:09,  6.19s/it]Meta-Episodes:  56%|█████▋    | 225/400 [40:32<18:08,  6.22s/it]Meta-Episodes:  56%|█████▋    | 226/400 [40:39<18:03,  6.23s/it]Meta-Episodes:  57%|█████▋    | 227/400 [40:44<17:38,  6.12s/it]Meta-Episodes:  57%|█████▋    | 228/400 [40:51<17:38,  6.15s/it]Meta-Episodes:  57%|█████▋    | 229/400 [40:57<17:16,  6.06s/it]Meta-Episodes:  57%|█████▊    | 230/400 [41:03<17:24,  6.15s/it]Meta-Episodes:  58%|█████▊    | 231/400 [41:09<17:03,  6.05s/it]Meta-Episodes:  58%|█████▊    | 232/400 [41:15<17:06,  6.11s/it]Meta-Episodes:  58%|█████▊    | 233/400 [41:21<17:08,  6.16s/it]Meta-Episodes:  58%|█████▊    | 234/400 [41:27<17:07,  6.19s/it]Meta-Episodes:  59%|█████▉    | 235/400 [41:33<16:47,  6.10s/it]Meta-Episodes:  59%|█████▉    | 236/400 [41:40<16:49,  6.16s/it]Meta-Episodes:  59%|█████▉    | 237/400 [41:46<16:49,  6.19s/it]Meta-Episodes:  60%|█████▉    | 238/400 [41:52<16:46,  6.21s/it]Meta-Episodes:  60%|█████▉    | 239/400 [41:58<16:25,  6.12s/it]Meta-Episodes:  60%|██████    | 240/400 [42:04<16:12,  6.08s/it]Meta-Episodes:  60%|██████    | 241/400 [42:10<16:12,  6.12s/it]Meta-Episodes:  60%|██████    | 242/400 [42:17<16:14,  6.17s/it]Meta-Episodes:  61%|██████    | 243/400 [42:23<16:12,  6.20s/it]Meta-Episodes:  61%|██████    | 244/400 [42:29<16:10,  6.22s/it]Meta-Episodes:  61%|██████▏   | 245/400 [42:35<15:49,  6.12s/it]Meta-Episodes:  62%|██████▏   | 246/400 [42:41<15:48,  6.16s/it]Meta-Episodes:  62%|██████▏   | 247/400 [42:47<15:45,  6.18s/it]Meta-Episodes:  62%|██████▏   | 248/400 [42:53<15:24,  6.08s/it]Meta-Episodes:  62%|██████▏   | 249/400 [42:59<15:07,  6.01s/it]
+[Episode 50] Meta-loss (post-adapt query): 1.1115 | pre-adapt query loss: 1.0859
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[4551, 459, 0] | true=[1670, 1670, 1670]
+  en: 0.3557
+  [pred-dist fr] predicted=[4540, 470, 0] | true=[1670, 1670, 1670]
+  fr: 0.3489
+  [pred-dist es] predicted=[4154, 856, 0] | true=[1670, 1670, 1670]
+  es: 0.3585
+  [pred-dist de] predicted=[4506, 504, 0] | true=[1670, 1670, 1670]
+  de: 0.3537
+  [pred-dist el] predicted=[1829, 3181, 0] | true=[1670, 1670, 1670]
+  el: 0.3808
+  [pred-dist bg] predicted=[3717, 1293, 0] | true=[1670, 1670, 1670]
+  bg: 0.3721
+  [pred-dist ru] predicted=[3218, 1792, 0] | true=[1670, 1670, 1670]
+  ru: 0.3798
+  [pred-dist tr] predicted=[4268, 742, 0] | true=[1670, 1670, 1670]
+  tr: 0.3565
+  [pred-dist ar] predicted=[3414, 1596, 0] | true=[1670, 1670, 1670]
+  ar: 0.3792
+  [pred-dist vi] predicted=[3503, 1507, 0] | true=[1670, 1670, 1670]
+  vi: 0.3715
+  [pred-dist th] predicted=[4999, 11, 0] | true=[1670, 1670, 1670]
+  th: 0.3339
+  [pred-dist zh] predicted=[4589, 421, 0] | true=[1670, 1670, 1670]
+  zh: 0.3497
+  [pred-dist hi] predicted=[2311, 2699, 0] | true=[1670, 1670, 1670]
+  hi: 0.3778
+  [pred-dist sw] predicted=[4307, 703, 0] | true=[1670, 1670, 1670]
+  sw: 0.3507
+  [pred-dist ur] predicted=[3177, 1833, 0] | true=[1670, 1670, 1670]
+  ur: 0.3631
+
+  Average: 0.3621
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.3621 (episode 50) -- saved best_meta_model.pt
+
+[Episode 100] Meta-loss (post-adapt query): 1.0817 | pre-adapt query loss: 1.0549
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[4395, 615, 0] | true=[1670, 1670, 1670]
+  en: 0.3776
+  [pred-dist fr] predicted=[4092, 918, 0] | true=[1670, 1670, 1670]
+  fr: 0.3914
+  [pred-dist es] predicted=[3939, 1071, 0] | true=[1670, 1670, 1670]
+  es: 0.3994
+  [pred-dist de] predicted=[4004, 1006, 0] | true=[1670, 1670, 1670]
+  de: 0.3908
+  [pred-dist el] predicted=[3249, 1761, 0] | true=[1670, 1670, 1670]
+  el: 0.4144
+  [pred-dist bg] predicted=[3612, 1398, 0] | true=[1670, 1670, 1670]
+  bg: 0.4034
+  [pred-dist ru] predicted=[3371, 1639, 0] | true=[1670, 1670, 1670]
+  ru: 0.4076
+  [pred-dist tr] predicted=[3767, 1243, 0] | true=[1670, 1670, 1670]
+  tr: 0.3904
+  [pred-dist ar] predicted=[3584, 1426, 0] | true=[1670, 1670, 1670]
+  ar: 0.3970
+  [pred-dist vi] predicted=[3767, 1243, 0] | true=[1670, 1670, 1670]
+  vi: 0.3932
+  [pred-dist th] predicted=[4907, 103, 0] | true=[1670, 1670, 1670]
+  th: 0.3405
+  [pred-dist zh] predicted=[4466, 544, 0] | true=[1670, 1670, 1670]
+  zh: 0.3723
+  [pred-dist hi] predicted=[2854, 2156, 0] | true=[1670, 1670, 1670]
+  hi: 0.4032
+  [pred-dist sw] predicted=[3860, 1150, 0] | true=[1670, 1670, 1670]
+  sw: 0.3858
+  [pred-dist ur] predicted=[3279, 1731, 0] | true=[1670, 1670, 1670]
+  ur: 0.3916
+
+  Average: 0.3906
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.3906 (episode 100) -- saved best_meta_model.pt
+
+[Episode 150] Meta-loss (post-adapt query): 1.0178 | pre-adapt query loss: 1.0551
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[934, 3415, 661] | true=[1670, 1670, 1670]
+  en: 0.4826
+  [pred-dist fr] predicted=[615, 3632, 763] | true=[1670, 1670, 1670]
+  fr: 0.4653
+  [pred-dist es] predicted=[630, 3735, 645] | true=[1670, 1670, 1670]
+  es: 0.4517
+  [pred-dist de] predicted=[494, 3834, 682] | true=[1670, 1670, 1670]
+  de: 0.4411
+  [pred-dist el] predicted=[540, 3849, 621] | true=[1670, 1670, 1670]
+  el: 0.4471
+  [pred-dist bg] predicted=[494, 3629, 887] | true=[1670, 1670, 1670]
+  bg: 0.4581
+  [pred-dist ru] predicted=[359, 3417, 1234] | true=[1670, 1670, 1670]
+  ru: 0.4569
+  [pred-dist tr] predicted=[285, 3366, 1359] | true=[1670, 1670, 1670]
+  tr: 0.4585
+  [pred-dist ar] predicted=[338, 4083, 589] | true=[1670, 1670, 1670]
+  ar: 0.4208
+  [pred-dist vi] predicted=[456, 4081, 473] | true=[1670, 1670, 1670]
+  vi: 0.4220
+  [pred-dist th] predicted=[590, 2593, 1827] | true=[1670, 1670, 1670]
+  th: 0.4455
+  [pred-dist zh] predicted=[482, 3932, 596] | true=[1670, 1670, 1670]
+  zh: 0.4373
+  [pred-dist hi] predicted=[166, 3768, 1076] | true=[1670, 1670, 1670]
+  hi: 0.4198
+  [pred-dist sw] predicted=[322, 3797, 891] | true=[1670, 1670, 1670]
+  sw: 0.4347
+  [pred-dist ur] predicted=[177, 3441, 1392] | true=[1670, 1670, 1670]
+  ur: 0.4244
+
+  Average: 0.4444
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.4444 (episode 150) -- saved best_meta_model.pt
+
+[Episode 200] Meta-loss (post-adapt query): 0.8706 | pre-adapt query loss: 0.9023
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[1521, 2337, 1152] | true=[1670, 1670, 1670]
+  en: 0.6477
+  [pred-dist fr] predicted=[1235, 2657, 1118] | true=[1670, 1670, 1670]
+  fr: 0.6238
+  [pred-dist es] predicted=[1244, 2667, 1099] | true=[1670, 1670, 1670]
+  es: 0.6238
+  [pred-dist de] predicted=[1070, 2788, 1152] | true=[1670, 1670, 1670]
+  de: 0.5998
+  [pred-dist el] predicted=[1114, 2911, 985] | true=[1670, 1670, 1670]
+  el: 0.6048
+  [pred-dist bg] predicted=[1091, 2854, 1065] | true=[1670, 1670, 1670]
+  bg: 0.6002
+  [pred-dist ru] predicted=[989, 2854, 1167] | true=[1670, 1670, 1670]
+  ru: 0.5890
+  [pred-dist tr] predicted=[689, 2983, 1338] | true=[1670, 1670, 1670]
+  tr: 0.5687
+  [pred-dist ar] predicted=[857, 3238, 915] | true=[1670, 1670, 1670]
+  ar: 0.5561
+  [pred-dist vi] predicted=[890, 3236, 884] | true=[1670, 1670, 1670]
+  vi: 0.5511
+  [pred-dist th] predicted=[931, 2738, 1341] | true=[1670, 1670, 1670]
+  th: 0.5621
+  [pred-dist zh] predicted=[983, 2858, 1169] | true=[1670, 1670, 1670]
+  zh: 0.5760
+  [pred-dist hi] predicted=[525, 3294, 1191] | true=[1670, 1670, 1670]
+  hi: 0.5371
+  [pred-dist sw] predicted=[845, 3104, 1061] | true=[1670, 1670, 1670]
+  sw: 0.5535
+  [pred-dist ur] predicted=[511, 3197, 1302] | true=[1670, 1670, 1670]
+  ur: 0.5178
+
+  Average: 0.5808
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.5808 (episode 200) -- saved best_meta_model.pt
+
+[Episode 250] Meta-loss (post-adapt query): 0.7650 | pre-adapt query loss: 0.8505
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[1537, 2705, 768] | true=[1670, 1670, 1670]
+  en: 0.6667
+  [pred-dist fr] predicted=[1220, 3116, 674] | true=[1670, 1670, 1670]
+  fr: 0.6164
+  [pred-dist es] predicted=[1292, 3025, 693] | true=[1670, 1670, 1670]
+  es: 0.6238
+  [pred-dist de] predicted=[1137, 3166, 707] | true=[1670, 1670, 1670]
+  de: 0.6062
+  [pred-dist el] predicted=[1115, 3253, 642] | true=[1670, 1670, 1670]
+  el: 0.6012
+  [pred-dist bg] predicted=[1134, 3209, 667] | true=[1670, 1670, 1670]
+  bg: 0.6050
+  [pred-dist ru] predicted=[1056, 3260, 694] | true=[1670, 1670, 1670]
+  ru: 0.5920
+  [pred-dist tr] predicted=[902, 3326, 782] | true=[1670, 1670, 1670]
+  tr: 0.5766
+  [pred-dist ar] predicted=[887, 3600, 523] | true=[1670, 1670, 1670]
+  ar: 0.5419
+  [pred-dist vi] predicted=[865, 3662, 483] | true=[1670, 1670, 1670]
+  vi: 0.5341
+  [pred-dist th] predicted=[848, 3395, 767] | true=[1670, 1670, 1670]
+  th: 0.5529
+  [pred-dist zh] predicted=[1040, 3306, 664] | true=[1670, 1670, 1670]
+  zh: 0.5768
+  [pred-dist hi] predicted=[673, 3639, 698] | true=[1670, 1670, 1670]
+  hi: 0.5455
+  [pred-dist sw] predicted=[910, 3462, 638] | true=[1670, 1670, 1670]Meta-Episodes:  62%|██████▎   | 250/400 [47:26<3:30:53, 84.35s/it]Meta-Episodes:  63%|██████▎   | 251/400 [47:33<2:31:17, 60.92s/it]Meta-Episodes:  63%|██████▎   | 252/400 [47:39<1:49:50, 44.53s/it]Meta-Episodes:  63%|██████▎   | 253/400 [47:45<1:20:58, 33.05s/it]Meta-Episodes:  64%|██████▎   | 254/400 [47:51<1:00:52, 25.01s/it]Meta-Episodes:  64%|██████▍   | 255/400 [47:58<46:50, 19.38s/it]  Meta-Episodes:  64%|██████▍   | 256/400 [48:04<37:04, 15.45s/it]Meta-Episodes:  64%|██████▍   | 257/400 [48:10<30:14, 12.69s/it]Meta-Episodes:  64%|██████▍   | 258/400 [48:16<25:28, 10.77s/it]Meta-Episodes:  65%|██████▍   | 259/400 [48:23<22:06,  9.40s/it]Meta-Episodes:  65%|██████▌   | 260/400 [48:29<19:45,  8.47s/it]Meta-Episodes:  65%|██████▌   | 261/400 [48:35<18:02,  7.79s/it]Meta-Episodes:  66%|██████▌   | 262/400 [48:41<16:50,  7.32s/it]Meta-Episodes:  66%|██████▌   | 263/400 [48:48<15:56,  6.99s/it]Meta-Episodes:  66%|██████▌   | 264/400 [48:54<15:20,  6.77s/it]Meta-Episodes:  66%|██████▋   | 265/400 [49:00<14:54,  6.62s/it]Meta-Episodes:  66%|██████▋   | 266/400 [49:06<14:33,  6.52s/it]Meta-Episodes:  67%|██████▋   | 267/400 [49:13<14:17,  6.45s/it]Meta-Episodes:  67%|██████▋   | 268/400 [49:19<14:04,  6.40s/it]Meta-Episodes:  67%|██████▋   | 269/400 [49:25<13:37,  6.24s/it]Meta-Episodes:  68%|██████▊   | 270/400 [49:31<13:35,  6.27s/it]Meta-Episodes:  68%|██████▊   | 271/400 [49:37<13:27,  6.26s/it]Meta-Episodes:  68%|██████▊   | 272/400 [49:44<13:21,  6.26s/it]Meta-Episodes:  68%|██████▊   | 273/400 [49:50<13:16,  6.27s/it]Meta-Episodes:  68%|██████▊   | 274/400 [49:56<13:09,  6.27s/it]Meta-Episodes:  69%|██████▉   | 275/400 [50:02<13:03,  6.27s/it]Meta-Episodes:  69%|██████▉   | 276/400 [50:08<12:41,  6.14s/it]Meta-Episodes:  69%|██████▉   | 277/400 [50:14<12:24,  6.06s/it]Meta-Episodes:  70%|██████▉   | 278/400 [50:20<12:11,  6.00s/it]Meta-Episodes:  70%|██████▉   | 279/400 [50:26<12:14,  6.07s/it]Meta-Episodes:  70%|███████   | 280/400 [50:33<12:17,  6.15s/it]Meta-Episodes:  70%|███████   | 281/400 [50:39<12:14,  6.17s/it]Meta-Episodes:  70%|███████   | 282/400 [50:45<12:11,  6.20s/it]Meta-Episodes:  71%|███████   | 283/400 [50:51<12:08,  6.23s/it]Meta-Episodes:  71%|███████   | 284/400 [50:58<12:04,  6.25s/it]Meta-Episodes:  71%|███████▏  | 285/400 [51:04<11:59,  6.26s/it]Meta-Episodes:  72%|███████▏  | 286/400 [51:10<11:39,  6.14s/it]Meta-Episodes:  72%|███████▏  | 287/400 [51:16<11:37,  6.17s/it]Meta-Episodes:  72%|███████▏  | 288/400 [51:22<11:34,  6.20s/it]Meta-Episodes:  72%|███████▏  | 289/400 [51:28<11:17,  6.10s/it]Meta-Episodes:  72%|███████▎  | 290/400 [51:35<11:20,  6.18s/it]Meta-Episodes:  73%|███████▎  | 291/400 [51:41<11:15,  6.20s/it]Meta-Episodes:  73%|███████▎  | 292/400 [51:47<11:11,  6.22s/it]Meta-Episodes:  73%|███████▎  | 293/400 [51:53<11:06,  6.23s/it]Meta-Episodes:  74%|███████▎  | 294/400 [52:00<11:01,  6.24s/it]Meta-Episodes:  74%|███████▍  | 295/400 [52:06<10:55,  6.24s/it]Meta-Episodes:  74%|███████▍  | 296/400 [52:12<10:50,  6.26s/it]Meta-Episodes:  74%|███████▍  | 297/400 [52:18<10:45,  6.27s/it]Meta-Episodes:  74%|███████▍  | 298/400 [52:25<10:39,  6.27s/it]Meta-Episodes:  75%|███████▍  | 299/400 [52:31<10:33,  6.27s/it]Meta-Episodes:  75%|███████▌  | 300/400 [56:59<2:21:24, 84.84s/it]Meta-Episodes:  75%|███████▌  | 301/400 [57:05<1:41:05, 61.27s/it]Meta-Episodes:  76%|███████▌  | 302/400 [57:12<1:13:07, 44.77s/it]Meta-Episodes:  76%|███████▌  | 303/400 [57:18<53:43, 33.23s/it]  Meta-Episodes:  76%|███████▌  | 304/400 [57:24<40:13, 25.14s/it]Meta-Episodes:  76%|███████▋  | 305/400 [57:31<30:50, 19.47s/it]Meta-Episodes:  76%|███████▋  | 306/400 [57:37<24:18, 15.51s/it]Meta-Episodes:  77%|███████▋  | 307/400 [57:43<19:44, 12.74s/it]Meta-Episodes:  77%|███████▋  | 308/400 [57:49<16:33, 10.80s/it]Meta-Episodes:  77%|███████▋  | 309/400 [57:56<14:18,  9.43s/it]Meta-Episodes:  78%|███████▊  | 310/400 [58:02<12:45,  8.50s/it]Meta-Episodes:  78%|███████▊  | 311/400 [58:08<11:35,  7.82s/it]Meta-Episodes:  78%|███████▊  | 312/400 [58:14<10:36,  7.23s/it]Meta-Episodes:  78%|███████▊  | 313/400 [58:20<10:03,  6.94s/it]Meta-Episodes:  78%|███████▊  | 314/400 [58:27<09:39,  6.74s/it]Meta-Episodes:  79%|███████▉  | 315/400 [58:33<09:21,  6.60s/it]Meta-Episodes:  79%|███████▉  | 316/400 [58:39<09:05,  6.50s/it]Meta-Episodes:  79%|███████▉  | 317/400 [58:45<08:53,  6.42s/it]Meta-Episodes:  80%|███████▉  | 318/400 [58:52<08:41,  6.36s/it]Meta-Episodes:  80%|███████▉  | 319/400 [58:58<08:32,  6.33s/it]Meta-Episodes:  80%|████████  | 320/400 [59:04<08:26,  6.33s/it]Meta-Episodes:  80%|████████  | 321/400 [59:10<08:08,  6.18s/it]Meta-Episodes:  80%|████████  | 322/400 [59:16<08:02,  6.19s/it]Meta-Episodes:  81%|████████  | 323/400 [59:22<07:57,  6.21s/it]Meta-Episodes:  81%|████████  | 324/400 [59:29<07:52,  6.22s/it]Meta-Episodes:  81%|████████▏ | 325/400 [59:35<07:39,  6.12s/it]Meta-Episodes:  82%|████████▏ | 326/400 [59:41<07:36,  6.16s/it]Meta-Episodes:  82%|████████▏ | 327/400 [59:47<07:31,  6.19s/it]Meta-Episodes:  82%|████████▏ | 328/400 [59:53<07:19,  6.10s/it]Meta-Episodes:  82%|████████▏ | 329/400 [59:59<07:16,  6.15s/it]Meta-Episodes:  82%|████████▎ | 330/400 [1:00:06<07:14,  6.21s/it]Meta-Episodes:  83%|████████▎ | 331/400 [1:00:11<07:00,  6.09s/it]Meta-Episodes:  83%|████████▎ | 332/400 [1:00:17<06:49,  6.02s/it]Meta-Episodes:  83%|████████▎ | 333/400 [1:00:24<06:48,  6.10s/it]Meta-Episodes:  84%|████████▎ | 334/400 [1:00:30<06:44,  6.13s/it]Meta-Episodes:  84%|████████▍ | 335/400 [1:00:36<06:40,  6.16s/it]Meta-Episodes:  84%|████████▍ | 336/400 [1:00:42<06:28,  6.08s/it]Meta-Episodes:  84%|████████▍ | 337/400 [1:00:48<06:26,  6.13s/it]Meta-Episodes:  84%|████████▍ | 338/400 [1:00:54<06:22,  6.17s/it]Meta-Episodes:  85%|████████▍ | 339/400 [1:01:01<06:18,  6.20s/it]Meta-Episodes:  85%|████████▌ | 340/400 [1:01:07<06:14,  6.24s/it]Meta-Episodes:  85%|████████▌ | 341/400 [1:01:13<06:08,  6.24s/it]Meta-Episodes:  86%|████████▌ | 342/400 [1:01:19<06:01,  6.24s/it]Meta-Episodes:  86%|████████▌ | 343/400 [1:01:26<05:56,  6.25s/it]Meta-Episodes:  86%|████████▌ | 344/400 [1:01:32<05:49,  6.25s/it]Meta-Episodes:  86%|████████▋ | 345/400 [1:01:38<05:43,  6.25s/it]Meta-Episodes:  86%|████████▋ | 346/400 [1:01:44<05:31,  6.13s/it]Meta-Episodes:  87%|████████▋ | 347/400 [1:01:50<05:26,  6.17s/it]Meta-Episodes:  87%|████████▋ | 348/400 [1:01:57<05:22,  6.20s/it]Meta-Episodes:  87%|████████▋ | 349/400 [1:02:03<05:17,  6.22s/it]Meta-Episodes:  88%|████████▊ | 350/400 [1:06:31<1:10:39, 84.79s/it]Meta-Episodes:  88%|████████▊ | 351/400 [1:06:37<49:54, 61.11s/it]  Meta-Episodes:  88%|████████▊ | 352/400 [1:06:43<35:43, 44.65s/it]Meta-Episodes:  88%|████████▊ | 353/400 [1:06:49<25:56, 33.12s/it]Meta-Episodes:  88%|████████▊ | 354/400 [1:06:56<19:12, 25.06s/it]Meta-Episodes:  89%|████████▉ | 355/400 [1:07:02<14:34, 19.42s/it]Meta-Episodes:  89%|████████▉ | 356/400 [1:07:08<11:21, 15.48s/it]Meta-Episodes:  89%|████████▉ | 357/400 [1:07:14<09:07, 12.72s/it]Meta-Episodes:  90%|████████▉ | 358/400 [1:07:21<07:33, 10.79s/it]Meta-Episodes:  90%|████████▉ | 359/400 [1:07:27<06:26,  9.42s/it]Meta-Episodes:  90%|█████████ | 360/400 [1:07:33<05:39,  8.50s/it]Meta-Episodes:  90%|█████████ | 361/400 [1:07:39<05:04,  7.82s/it]Meta-Episodes:  90%|█████████ | 362/400 [1:07:46<04:39,  7.35s/it]Meta-Episodes:  91%|█████████ | 363/400 [1:07:52<04:19,  7.01s/it]Meta-Episodes:  91%|█████████ | 364/400 [1:07:57<03:55,  6.53s/it]Meta-Episodes:  91%|█████████▏| 365/400 [1:08:04<03:44,  6.43s/it]Meta-Episodes:  92%|█████████▏| 366/400 [1:08:10<03:36,  6.38s/it]Meta-Episodes:  92%|█████████▏| 367/400 [1:08:16<03:29,  6.35s/it]Meta-Episodes:  92%|█████████▏| 368/400 [1:08:22<03:22,  6.32s/it]Meta-Episodes:  92%|█████████▏| 369/400 [1:08:29<03:15,  6.30s/it]Meta-Episodes:  92%|█████████▎| 370/400 [1:08:35<03:09,  6.31s/it]Meta-Episodes:  93%|█████████▎| 371/400 [1:08:41<02:58,  6.16s/it]Meta-Episodes:  93%|█████████▎| 372/400 [1:08:47<02:53,  6.19s/it]Meta-Episodes:  93%|█████████▎| 373/400 [1:08:53<02:47,  6.21s/it]Meta-Episodes:  94%|█████████▎| 374/400 [1:09:00<02:41,  6.22s/it]Meta-Episodes:  94%|█████████▍| 375/400 [1:09:06<02:35,  6.23s/it]Meta-Episodes:  94%|█████████▍| 376/400 [1:09:12<02:26,  6.12s/it]Meta-Episodes:  94%|█████████▍| 377/400 [1:09:18<02:21,  6.14s/it]Meta-Episodes:  94%|█████████▍| 378/400 [1:09:24<02:15,  6.18s/it]Meta-Episodes:  95%|█████████▍| 379/400 [1:09:30<02:10,  6.20s/it]Meta-Episodes:  95%|█████████▌| 380/400 [1:09:37<02:04,  6.24s/it]Meta-Episodes:  95%|█████████▌| 381/400 [1:09:43<01:58,  6.24s/it]Meta-Episodes:  96%|█████████▌| 382/400 [1:09:49<01:50,  6.13s/it]Meta-Episodes:  96%|█████████▌| 383/400 [1:09:55<01:43,  6.06s/it]Meta-Episodes:  96%|█████████▌| 384/400 [1:10:01<01:37,  6.12s/it]Meta-Episodes:  96%|█████████▋| 385/400 [1:10:07<01:32,  6.16s/it]Meta-Episodes:  96%|█████████▋| 386/400 [1:10:13<01:25,  6.08s/it]Meta-Episodes:  97%|█████████▋| 387/400 [1:10:19<01:19,  6.12s/it]Meta-Episodes:  97%|█████████▋| 388/400 [1:10:25<01:12,  6.05s/it]Meta-Episodes:  97%|█████████▋| 389/400 [1:10:31<01:05,  6.00s/it]Meta-Episodes:  98%|█████████▊| 390/400 [1:10:37<01:01,  6.11s/it]Meta-Episodes:  98%|█████████▊| 391/400 [1:10:43<00:54,  6.03s/it]Meta-Episodes:  98%|█████████▊| 392/400 [1:10:50<00:48,  6.09s/it]Meta-Episodes:  98%|█████████▊| 393/400 [1:10:56<00:42,  6.14s/it]Meta-Episodes:  98%|█████████▊| 394/400 [1:11:02<00:36,  6.06s/it]Meta-Episodes:  99%|█████████▉| 395/400 [1:11:08<00:30,  6.11s/it]Meta-Episodes:  99%|█████████▉| 396/400 [1:11:14<00:24,  6.04s/it]Meta-Episodes:  99%|█████████▉| 397/400 [1:11:20<00:17,  5.99s/it]Meta-Episodes: 100%|█████████▉| 398/400 [1:11:26<00:12,  6.06s/it]Meta-Episodes: 100%|█████████▉| 399/400 [1:11:32<00:06,  6.12s/it]Meta-Episodes: 100%|██████████| 400/400 [1:16:00<00:00, 84.55s/it]Meta-Episodes: 100%|██████████| 400/400 [1:16:00<00:00, 11.40s/it]
+
+  sw: 0.5453
+  [pred-dist ur] predicted=[556, 3739, 715] | true=[1670, 1670, 1670]
+  ur: 0.5160
+
+  Average: 0.5800
+----------------------------------------------------------------------
+
+[Episode 300] Meta-loss (post-adapt query): 0.5867 | pre-adapt query loss: 0.6997
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[1885, 1156, 1969] | true=[1670, 1670, 1670]
+  en: 0.7499
+  [pred-dist fr] predicted=[1684, 1305, 2021] | true=[1670, 1670, 1670]
+  fr: 0.7287
+  [pred-dist es] predicted=[1691, 1327, 1992] | true=[1670, 1670, 1670]
+  es: 0.7234
+  [pred-dist de] predicted=[1606, 1302, 2102] | true=[1670, 1670, 1670]
+  de: 0.7104
+  [pred-dist el] predicted=[1541, 1419, 2050] | true=[1670, 1670, 1670]
+  el: 0.7180
+  [pred-dist bg] predicted=[1546, 1429, 2035] | true=[1670, 1670, 1670]
+  bg: 0.7192
+  [pred-dist ru] predicted=[1551, 1362, 2097] | true=[1670, 1670, 1670]
+  ru: 0.7034
+  [pred-dist tr] predicted=[1446, 1205, 2359] | true=[1670, 1670, 1670]
+  tr: 0.6743
+  [pred-dist ar] predicted=[1370, 1486, 2154] | true=[1670, 1670, 1670]
+  ar: 0.6778
+  [pred-dist vi] predicted=[1318, 1657, 2035] | true=[1670, 1670, 1670]
+  vi: 0.6878
+  [pred-dist th] predicted=[1399, 943, 2668] | true=[1670, 1670, 1670]
+  th: 0.6230
+  [pred-dist zh] predicted=[1586, 1243, 2181] | true=[1670, 1670, 1670]
+  zh: 0.6836
+  [pred-dist hi] predicted=[1168, 1291, 2551] | true=[1670, 1670, 1670]
+  hi: 0.6341
+  [pred-dist sw] predicted=[1440, 1406, 2164] | true=[1670, 1670, 1670]
+  sw: 0.6567
+  [pred-dist ur] predicted=[1139, 1106, 2765] | true=[1670, 1670, 1670]
+  ur: 0.5914
+
+  Average: 0.6854
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.6854 (episode 300) -- saved best_meta_model.pt
+
+[Episode 350] Meta-loss (post-adapt query): 0.5654 | pre-adapt query loss: 0.5688
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[2371, 1305, 1334] | true=[1670, 1670, 1670]
+  en: 0.7407
+  [pred-dist fr] predicted=[2167, 1543, 1300] | true=[1670, 1670, 1670]
+  fr: 0.7269
+  [pred-dist es] predicted=[2188, 1512, 1310] | true=[1670, 1670, 1670]
+  es: 0.7297
+  [pred-dist de] predicted=[2142, 1536, 1332] | true=[1670, 1670, 1670]
+  de: 0.7212
+  [pred-dist el] predicted=[1931, 1774, 1305] | true=[1670, 1670, 1670]
+  el: 0.7327
+  [pred-dist bg] predicted=[2017, 1671, 1322] | true=[1670, 1670, 1670]
+  bg: 0.7255
+  [pred-dist ru] predicted=[2122, 1542, 1346] | true=[1670, 1670, 1670]
+  ru: 0.7168
+  [pred-dist tr] predicted=[1985, 1500, 1525] | true=[1670, 1670, 1670]
+  tr: 0.7062
+  [pred-dist ar] predicted=[1918, 1756, 1336] | true=[1670, 1670, 1670]
+  ar: 0.6946
+  [pred-dist vi] predicted=[1753, 2085, 1172] | true=[1670, 1670, 1670]
+  vi: 0.6994
+  [pred-dist th] predicted=[2082, 1321, 1607] | true=[1670, 1670, 1670]
+  th: 0.6621
+  [pred-dist zh] predicted=[2167, 1426, 1417] | true=[1670, 1670, 1670]
+  zh: 0.6868
+  [pred-dist hi] predicted=[1738, 1696, 1576] | true=[1670, 1670, 1670]
+  hi: 0.6936
+  [pred-dist sw] predicted=[2075, 1627, 1308] | true=[1670, 1670, 1670]
+  sw: 0.6697
+  [pred-dist ur] predicted=[1706, 1693, 1611] | true=[1670, 1670, 1670]
+  ur: 0.6567
+
+  Average: 0.7042
+----------------------------------------------------------------------
+✓ Checkpoint saved: best_meta_model.pt
+  ★ New best avg zero-shot accuracy: 0.7042 (episode 350) -- saved best_meta_model.pt
+
+[Episode 400] Meta-loss (post-adapt query): 0.5625 | pre-adapt query loss: 0.5349
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[2627, 1115, 1268] | true=[1670, 1670, 1670]
+  en: 0.7212
+  [pred-dist fr] predicted=[2483, 1275, 1252] | true=[1670, 1670, 1670]
+  fr: 0.7130
+  [pred-dist es] predicted=[2506, 1251, 1253] | true=[1670, 1670, 1670]
+  es: 0.7130
+  [pred-dist de] predicted=[2452, 1274, 1284] | true=[1670, 1670, 1670]
+  de: 0.7044
+  [pred-dist el] predicted=[2216, 1476, 1318] | true=[1670, 1670, 1670]
+  el: 0.7279
+  [pred-dist bg] predicted=[2312, 1409, 1289] | true=[1670, 1670, 1670]
+  bg: 0.7122
+  [pred-dist ru] predicted=[2443, 1254, 1313] | true=[1670, 1670, 1670]
+  ru: 0.7054
+  [pred-dist tr] predicted=[2337, 1210, 1463] | true=[1670, 1670, 1670]
+  tr: 0.6996
+  [pred-dist ar] predicted=[2269, 1398, 1343] | true=[1670, 1670, 1670]
+  ar: 0.6850
+  [pred-dist vi] predicted=[2126, 1692, 1192] | true=[1670, 1670, 1670]
+  vi: 0.7002
+  [pred-dist th] predicted=[2566, 961, 1483] | true=[1670, 1670, 1670]
+  th: 0.6479
+  [pred-dist zh] predicted=[2540, 1108, 1362] | true=[1670, 1670, 1670]
+  zh: 0.6749
+  [pred-dist hi] predicted=[2101, 1352, 1557] | true=[1670, 1670, 1670]
+  hi: 0.6936
+  [pred-dist sw] predicted=[2483, 1301, 1226] | true=[1670, 1670, 1670]
+  sw: 0.6601
+  [pred-dist ur] predicted=[2134, 1241, 1635] | true=[1670, 1670, 1670]
+  ur: 0.6481
+
+  Average: 0.6938
+----------------------------------------------------------------------
+
+✓ Meta-learning completed!
+
+[Best checkpoint] Loading best_meta_model.pt (avg zero-shot acc 0.7042) for final evaluation...
+✓ Checkpoint loaded: best_meta_model.pt
+
+======================================================================
+STEP 5: FINAL ZERO-SHOT EVALUATION
+======================================================================
+
+----------------------------------------------------------------------
+EVALUATING ALL LANGUAGES
+----------------------------------------------------------------------
+  [pred-dist en] predicted=[2371, 1305, 1334] | true=[1670, 1670, 1670]
+  en: 0.7407
+  [pred-dist fr] predicted=[2167, 1543, 1300] | true=[1670, 1670, 1670]
+  fr: 0.7269
+  [pred-dist es] predicted=[2188, 1512, 1310] | true=[1670, 1670, 1670]
+  es: 0.7297
+  [pred-dist de] predicted=[2142, 1536, 1332] | true=[1670, 1670, 1670]
+  de: 0.7212
+  [pred-dist el] predicted=[1931, 1774, 1305] | true=[1670, 1670, 1670]
+  el: 0.7327
+  [pred-dist bg] predicted=[2017, 1671, 1322] | true=[1670, 1670, 1670]
+  bg: 0.7255
+  [pred-dist ru] predicted=[2122, 1542, 1346] | true=[1670, 1670, 1670]
+  ru: 0.7168
+  [pred-dist tr] predicted=[1985, 1500, 1525] | true=[1670, 1670, 1670]
+  tr: 0.7062
+  [pred-dist ar] predicted=[1918, 1756, 1336] | true=[1670, 1670, 1670]
+  ar: 0.6946
+  [pred-dist vi] predicted=[1753, 2085, 1172] | true=[1670, 1670, 1670]
+  vi: 0.6994
+  [pred-dist th] predicted=[2082, 1321, 1607] | true=[1670, 1670, 1670]
+  th: 0.6621
+  [pred-dist zh] predicted=[2167, 1426, 1417] | true=[1670, 1670, 1670]
+  zh: 0.6868
+  [pred-dist hi] predicted=[1738, 1696, 1576] | true=[1670, 1670, 1670]
+  hi: 0.6936
+  [pred-dist sw] predicted=[2075, 1627, 1308] | true=[1670, 1670, 1670]
+  sw: 0.6697
+  [pred-dist ur] predicted=[1706, 1693, 1611] | true=[1670, 1670, 1670]
+  ur: 0.6567
+
+  Average: 0.7042
+----------------------------------------------------------------------
+✓ Saved: ./results_ablation_floor_no_warmup_no_curriculum/final_results.json
+✓ Saved: ./results_ablation_floor_no_warmup_no_curriculum/training_history.json
+
+======================================================================
+STEP 6: GENERATING VISUALIZATIONS
+======================================================================
+✓ Saved: ./plots_ablation_floor_no_warmup_no_curriculum/training_curves.png
+✓ Saved: ./plots_ablation_floor_no_warmup_no_curriculum/language_comparison.png
+✓ Saved: ./results_ablation_floor_no_warmup_no_curriculum/results_table.csv
+
+======================================================================
+RESULTS TABLE
+======================================================================
+Language CML (Ours) mDeBERTa Baseline Improvement
+      en      74.07             33.33      +40.74
+      fr      72.69             33.33      +39.36
+      es      72.97             33.33      +39.64
+      de      72.12             33.33      +38.78
+      el      73.27             33.33      +39.94
+      bg      72.55             33.33      +39.22
+      ru      71.68             33.33      +38.34
+      tr      70.62             33.33      +37.29
+      ar      69.46             33.33      +36.13
+      vi      69.94             33.33      +36.61
+      th      66.21             33.33      +32.87
+      zh      68.68             33.33      +35.35
+      hi      69.36             33.33      +36.03
+      sw      66.97             33.33      +33.63
+      ur      65.67             33.33      +32.34
+ Average      70.42             33.33      +37.08
+======================================================================
+  (skip) No difficulty_drift data to plot
+  (skip) No alignment_stats data to plot
+
+======================================================================
+FINAL SUMMARY
+======================================================================
+
+Baseline (after warmup):
+  Average Accuracy: 33.33%
+
+Final (after meta-learning, best_meta_model.pt):
+  Average Accuracy: 70.42%
+
+Improvement: +37.08%
+
+✓ All results saved to: ./results_ablation_floor_no_warmup_no_curriculum
+✓ All plots saved to: ./plots_ablation_floor_no_warmup_no_curriculum
+✓ All checkpoints saved to: ./checkpoints_ablation_floor_no_warmup_no_curriculum
+
+======================================================================
+EXPERIMENT COMPLETE!
+======================================================================
+
+[timing] Config floor_no_warmup_no_curriculum took 85.7 minutes
+  [cleanup] removed ./checkpoints_ablation_floor_no_warmup_no_curriculum/best_meta_model.pt
+[disk] 10.62 GB free after cleaning up config floor_no_warmup_no_curriculum
+
+✓ Saved: ./results/pipeline_ablation_comparison.csv
+✓ Saved: ./results/pipeline_ablation_comparison.json
+✓ Saved: ./plots/pipeline_ablation_comparison.png
+
+Language  no_warmup_dacl  floor_no_warmup_no_curriculum
+      en        0.662675                       0.740719
+      fr        0.617166                       0.726946
+      es        0.626547                       0.729741
+      de        0.637525                       0.721158
+      el        0.611776                       0.732735
+      bg        0.642515                       0.725549
+      ru        0.636926                       0.716766
+      tr        0.619361                       0.706188
+      ar        0.609182                       0.694611
+      vi        0.587026                       0.699401
+      th        0.574651                       0.662076
+      zh        0.604591                       0.686826
+      hi        0.607385                       0.693613
+      sw        0.580838                       0.669661
+      ur        0.576048                       0.656687
+ average        0.612947                       0.704178

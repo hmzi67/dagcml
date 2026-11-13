@@ -1,0 +1,171 @@
+{
+  "configs": {
+    "A": {
+      "curriculum_mode": "cross_review",
+      "window_scheduling": "random",
+      "alignment_gating": false
+    },
+    "B": {
+      "curriculum_mode": "dacl_static",
+      "window_scheduling": "random",
+      "alignment_gating": false
+    },
+    "C": {
+      "curriculum_mode": "dacl_dynamic",
+      "window_scheduling": "competence",
+      "alignment_gating": false
+    },
+    "D": {
+      "curriculum_mode": "dacl_dynamic",
+      "window_scheduling": "competence",
+      "alignment_gating": true
+    }
+  },
+  "results": {
+    "D": {
+      "en": 0.8868263473053892,
+      "fr": 0.837125748502994,
+      "es": 0.8487025948103792,
+      "de": 0.8323353293413174,
+      "el": 0.8257485029940119,
+      "bg": 0.8353293413173652,
+      "ru": 0.8197604790419162,
+      "tr": 0.7972055888223553,
+      "ar": 0.7988023952095809,
+      "vi": 0.7972055888223553,
+      "th": 0.768063872255489,
+      "zh": 0.8011976047904191,
+      "hi": 0.7750499001996008,
+      "sw": 0.7425149700598802,
+      "ur": 0.732934131736527,
+      "average": 0.8065868263473053
+    },
+    "A": {
+      "en": 0.883433133732535,
+      "fr": 0.8391217564870259,
+      "es": 0.849500998003992,
+      "de": 0.8377245508982036,
+      "el": 0.8257485029940119,
+      "bg": 0.8347305389221557,
+      "ru": 0.8189620758483034,
+      "tr": 0.8057884231536926,
+      "ar": 0.7994011976047904,
+      "vi": 0.8039920159680639,
+      "th": 0.7744510978043913,
+      "zh": 0.8029940119760479,
+      "hi": 0.7756487025948103,
+      "sw": 0.7479041916167665,
+      "ur": 0.7339321357285429,
+      "average": 0.808888888888889
+    },
+    "B": {
+      "en": 0.8842315369261478,
+      "fr": 0.8355289421157684,
+      "es": 0.8469061876247505,
+      "de": 0.836127744510978,
+      "el": 0.824750499001996,
+      "bg": 0.8333333333333334,
+      "ru": 0.8187624750499002,
+      "tr": 0.799001996007984,
+      "ar": 0.7942115768463074,
+      "vi": 0.7920159680638723,
+      "th": 0.7746506986027945,
+      "zh": 0.7994011976047904,
+      "hi": 0.7716566866267465,
+      "sw": 0.7469061876247505,
+      "ur": 0.731936127744511,
+      "average": 0.8059614105123087
+    },
+    "C": {
+      "en": 0.887624750499002,
+      "fr": 0.8357285429141716,
+      "es": 0.8508982035928143,
+      "de": 0.8367265469061876,
+      "el": 0.8293413173652695,
+      "bg": 0.8321357285429142,
+      "ru": 0.8171656686626747,
+      "tr": 0.8007984031936127,
+      "ar": 0.7960079840319362,
+      "vi": 0.7890219560878243,
+      "th": 0.7714570858283433,
+      "zh": 0.8019960079840319,
+      "hi": 0.7658682634730539,
+      "sw": 0.7473053892215569,
+      "ur": 0.7315369261477046,
+      "average": 0.8062408516300733
+    }
+  },
+  "compute_cost": {
+    "D": {
+      "per_language": {
+        "ru": {
+          "mode": "dacl_dynamic",
+          "wall_clock_seconds": 8.637371301651001,
+          "forward_backward_passes": 312
+        },
+        "el": {
+          "mode": "dacl_dynamic",
+          "wall_clock_seconds": 8.658713579177856,
+          "forward_backward_passes": 312
+        }
+      }
+    },
+    "A": {
+      "per_language": {
+        "ru": {
+          "mode": "cross_review",
+          "wall_clock_seconds": 111.24506640434265,
+          "forward_backward_passes": 930
+        },
+        "el": {
+          "mode": "cross_review",
+          "wall_clock_seconds": 109.97144031524658,
+          "forward_backward_passes": 930
+        }
+      }
+    },
+    "B": {
+      "per_language": {
+        "ru": {
+          "mode": "dacl_static",
+          "wall_clock_seconds": 8.680786371231079,
+          "forward_backward_passes": 312
+        },
+        "el": {
+          "mode": "dacl_static",
+          "wall_clock_seconds": 8.64734435081482,
+          "forward_backward_passes": 312
+        }
+      }
+    },
+    "C": {
+      "per_language": {
+        "ru": {
+          "mode": "dacl_dynamic",
+          "wall_clock_seconds": 8.690381288528442,
+          "forward_backward_passes": 312
+        },
+        "el": {
+          "mode": "dacl_dynamic",
+          "wall_clock_seconds": 8.659136533737183,
+          "forward_backward_passes": 312
+        }
+      }
+    }
+  },
+  "wall_clock_seconds": {
+    "D": 24136.55323624611,
+    "A": null,
+    "B": null,
+    "C": null
+  },
+  "wall_clock_notes": {
+    "D": "measured by run_ablation.py run_suite() timing wrapper (authoritative)",
+    "A": "not recorded: this run predates being executed through run_ablation.py run_suite() and has no timing wrapper. File mtimes only span the final eval phase (~80-90 min), not total training time, so no reliable wall-clock figure exists for this run.",
+    "B": "not recorded: this run predates being executed through run_ablation.py run_suite() and has no timing wrapper. File mtimes only span the final eval phase (~80-90 min), not total training time, so no reliable wall-clock figure exists for this run.",
+    "C": "not recorded: this run predates being executed through run_ablation.py run_suite() and has no timing wrapper. File mtimes only span the final eval phase (~80-90 min), not total training time, so no reliable wall-clock figure exists for this run."
+  },
+  "debug_mode": false,
+  "seed": 42,
+  "merge_note": "A, B, C were run to completion on 2026-07-23/24 (results_ablation_A/B/C) prior to this file existing; D was run on 2026-07-27 via run_ablation.py and originally written here alone. This file was produced by merging the four pre-existing completed runs, not by retraining any of them."
+}
